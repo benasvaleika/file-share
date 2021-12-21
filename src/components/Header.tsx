@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { FaClock, FaRegCopy } from "react-icons/fa";
+import { FaRegCopy } from "react-icons/fa";
 import { Button } from "./Button";
 import { InputField } from "./InputField";
 
@@ -12,7 +12,10 @@ export const Header: React.FC<HeaderProps> = ({ roomID }) => {
 
   const roomIdChangeHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
     e.preventDefault();
-    setRoomIdVal(e.target.value.toUpperCase());
+    //Implement Regex to according to Room ID
+    if (e.target.value.length <= 4) {
+      setRoomIdVal(e.target.value.toUpperCase());
+    }
   };
 
   const onJoinHandler = (
@@ -46,7 +49,7 @@ export const Header: React.FC<HeaderProps> = ({ roomID }) => {
               size="small"
               color="secondaryOne"
               onClick={(e) => onJoinHandler(e)}
-              className="ml-1"
+              className="ml-1 hover:text-base"
             />
           </div>
         </div>
