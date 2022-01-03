@@ -1,3 +1,4 @@
+import React from 'react';
 import { useState } from 'react';
 import { Line } from './Line';
 import { UserIcon } from './UserIcon';
