@@ -6,7 +6,7 @@ import { MenuWindow } from './MenuWindow';
 
 interface ChatMenuProps {}
 
-export const ChatMenu: React.FC<ChatMenuProps> = ({}) => {
+export const ChatMenu: React.FC<ChatMenuProps> = () => {
   const [inputText, setInputText] = useState('');
 
   const chatMessages = true;

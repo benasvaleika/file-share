@@ -4,7 +4,7 @@ import { UserIcon } from './UserIcon';
 
 interface SharingHeaderProps {}
 
-export const SharingHeader: React.FC<SharingHeaderProps> = ({}) => {
+export const SharingHeader: React.FC<SharingHeaderProps> = () => {
   const [usersConnected, setUsersConnected] = useState(true);
 
   return (

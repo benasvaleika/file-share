@@ -3,7 +3,7 @@ import { File } from './File';
 
 interface SharingBodyProps {}
 
-export const SharingBody: React.FC<SharingBodyProps> = ({}) => {
+export const SharingBody: React.FC<SharingBodyProps> = () => {
   const files = true;
   return (
     <>
