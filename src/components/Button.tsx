@@ -7,20 +7,20 @@ interface ButtonProps {
 }
 
 const sizeClassNames = {
-  big: "h-6 w-24",
-  medium: "h-6 w-20",
-  small: "h-6 w-14",
+  big: 'h-6 w-24',
+  medium: 'h-6 w-20',
+  small: 'h-6 w-14',
 };
 
 const colorClassNames = {
-  secondaryOne: "bg-secondary-one hover:bg-secondary-two ease-in duration-150",
-  secondaryTwo: "bg-secondary-two hover:bg-secondary-one ease-in duration-150",
+  secondaryOne: 'bg-secondary-one hover:bg-secondary-two ease-in duration-150',
+  secondaryTwo: 'bg-secondary-two hover:bg-secondary-one ease-in duration-150',
 };
 
 export const Button: React.FC<ButtonProps> = ({
   name,
-  size = "big",
-  color = "secondaryOne",
+  size = 'big',
+  color = 'secondaryOne',
   onClick,
   className,
 }) => {

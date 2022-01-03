@@ -1,6 +1,6 @@
-import { useState } from "react";
-import { Line } from "./Line";
-import { UserIcon } from "./UserIcon";
+import { useState } from 'react';
+import { Line } from './Line';
+import { UserIcon } from './UserIcon';
 
 interface SharingHeaderProps {}
 

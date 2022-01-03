@@ -1,4 +1,4 @@
-import { ReactChild } from "react";
+import { ReactChild } from 'react';
 
 interface MenuWindowProps {
   menuTitle: string;
@@ -19,9 +19,7 @@ export const MenuWindow: React.FC<MenuWindowProps> = ({
 }) => {
   return (
     <div className={`flex flex-col h-full  ${menuClassName}`}>
-      <div className={`text-white text-xl font-rhd font-bold mb-2 ${ml}`}>
-        {menuTitle}
-      </div>
+      <div className={`text-white text-xl font-rhd font-bold mb-2 ${ml}`}>{menuTitle}</div>
       <div
         className={`w-[calc(100%-3rem)] ml h-full border-solid bg-primary rounded-lg ${ml} ${mr} ${bodyClassName}`}
       >

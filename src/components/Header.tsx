@@ -1,14 +1,14 @@
-import { useState } from "react";
-import { FaRegCopy } from "react-icons/fa";
-import { Button } from "./Button";
-import { InputField } from "./InputField";
+import { useState } from 'react';
+import { FaRegCopy } from 'react-icons/fa';
+import { Button } from './Button';
+import { InputField } from './InputField';
 
 interface HeaderProps {
   roomID?: string;
 }
 
 export const Header: React.FC<HeaderProps> = ({ roomID }) => {
-  const [roomIdVal, setRoomIdVal] = useState<string>("");
+  const [roomIdVal, setRoomIdVal] = useState<string>('');
 
   const roomIdChangeHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
     e.preventDefault();
@@ -18,23 +18,17 @@ export const Header: React.FC<HeaderProps> = ({ roomID }) => {
     }
   };
 
-  const onJoinHandler = (
-    e: React.MouseEvent<HTMLButtonElement, MouseEvent>
-  ) => {
+  const onJoinHandler = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
     e.preventDefault();
-    console.log("Join");
+    console.log('Join');
   };
 
   return (
     <div className="flex h-14 items-end justify-between">
-      <div className="text-white font-rhd font-bold text-4xl ml-8">
-        file-share
-      </div>
+      <div className="text-white font-rhd font-bold text-4xl ml-8">file-share</div>
       <div className="flex mr-10">
         <div className="flex mr-6 ">
-          <div className="text-white font-rhd font-bold text-xl mr-2">
-            Join Room:
-          </div>
+          <div className="text-white font-rhd font-bold text-xl mr-2">Join Room:</div>
           <div className="flex">
             <InputField
               placeholder="room id"

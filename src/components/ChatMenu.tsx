@@ -1,13 +1,13 @@
-import { useState } from "react";
-import { Button } from "./Button";
-import { ChatMessage } from "./ChatMessage";
-import { InputField } from "./InputField";
-import { MenuWindow } from "./MenuWindow";
+import { useState } from 'react';
+import { Button } from './Button';
+import { ChatMessage } from './ChatMessage';
+import { InputField } from './InputField';
+import { MenuWindow } from './MenuWindow';
 
 interface ChatMenuProps {}
 
 export const ChatMenu: React.FC<ChatMenuProps> = ({}) => {
-  const [inputText, setInputText] = useState("");
+  const [inputText, setInputText] = useState('');
 
   const chatMessages = true;
 
@@ -32,9 +32,7 @@ export const ChatMenu: React.FC<ChatMenuProps> = ({}) => {
           </div>
         ) : (
           <div className="flex justify-center items-center text-center w-full flex-grow ">
-            <div className="text-secondary-two font-rhd font-bold text-base">
-              No Messages
-            </div>
+            <div className="text-secondary-two font-rhd font-bold text-base">No Messages</div>
           </div>
         )}
         <div className="flex bg-primary items-end justify-between mx-3 my-3 ">
@@ -48,7 +46,7 @@ export const ChatMenu: React.FC<ChatMenuProps> = ({}) => {
           <Button
             name="Send"
             color="secondaryTwo"
-            onClick={() => console.log("send")}
+            onClick={() => console.log('send')}
             className="ml-3"
           />
         </div>

@@ -8,22 +8,22 @@ interface InputFieldProps {
 }
 
 const sizeClassNames = {
-  big: "w-54 h-6",
-  small: "w-24 h-6",
+  big: 'w-54 h-6',
+  small: 'w-24 h-6',
 };
 
 const colorClassNames = {
-  primary: "bg-primary",
-  secondary: "bg-secondary-one",
+  primary: 'bg-primary',
+  secondary: 'bg-secondary-one',
 };
 
 export const InputField: React.FC<InputFieldProps> = ({
   placeholder,
   value,
   onChange,
-  size = "big",
-  color = "primary",
-  className = "",
+  size = 'big',
+  color = 'primary',
+  className = '',
 }) => {
   return (
     <input

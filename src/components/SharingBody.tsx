@@ -1,5 +1,5 @@
-import { FaPlus } from "react-icons/fa";
-import { File } from "./File";
+import { FaPlus } from 'react-icons/fa';
+import { File } from './File';
 
 interface SharingBodyProps {}
 
@@ -20,12 +20,8 @@ export const SharingBody: React.FC<SharingBodyProps> = ({}) => {
               size={100}
               className="text-secondary-one hover:text-secondary-two ease-in-out duration-200"
             />
-            <div className="text-secondary-two font-rhd font-bold text-lg -mb-1">
-              Add new files
-            </div>
-            <div className="text-secondary-two font-rhd font-bold">
-              (Shared with all users)
-            </div>
+            <div className="text-secondary-two font-rhd font-bold text-lg -mb-1">Add new files</div>
+            <div className="text-secondary-two font-rhd font-bold">(Shared with all users)</div>
           </div>
         </div>
       )}

@@ -1,15 +1,12 @@
-import { Line } from "./Line";
-import { FaRegCopy } from "react-icons/fa";
+import { Line } from './Line';
+import { FaRegCopy } from 'react-icons/fa';
 
 interface ChatMessageProps {
   time: string;
   msgContent: string;
 }
 
-export const ChatMessage: React.FC<ChatMessageProps> = ({
-  time,
-  msgContent,
-}) => {
+export const ChatMessage: React.FC<ChatMessageProps> = ({ time, msgContent }) => {
   return (
     <div className="flex flex-col mt-2 ml-2 font-rhd font-bold text-white">
       <div className="flex justify-between">

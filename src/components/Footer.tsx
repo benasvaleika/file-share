@@ -1,6 +1,6 @@
 interface FooterProps {}
 
-export const Footer: React.FC<FooterProps> = ({}) => {
+export const Footer: React.FC<FooterProps> = () => {
   return (
     <div className="flex justify-center w-full mt-4 text-white font-rhd text-sm">
       <div className="flex">
