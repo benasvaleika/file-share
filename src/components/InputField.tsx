@@ -9,7 +9,7 @@ interface InputFieldProps {
 
 const sizeClassNames = {
   big: "w-54 h-6",
-  small: "w-24 h-6",
+  small: "w-full max-w-none h-6",
 };
 
 const colorClassNames = {
@@ -26,13 +26,12 @@ export const InputField: React.FC<InputFieldProps> = ({
   className = "",
 }) => {
   return (
-    <div>
-      <input
-        className={`rounded-md text-white pl-1 border-none font-rhd font-bold placeholder:text-slate-200 ${sizeClassNames[size]} ${colorClassNames[color]} ${className}`}
-        value={value}
-        placeholder={placeholder}
-        onChange={(e) => onChange(e)}
-      ></input>
-    </div>
+    <input
+      className={`rounded-md text-white pl-1 border-none font-rhd font-bold placeholder:text-slate-200 
+        ${sizeClassNames[size]} ${colorClassNames[color]} ${className}`}
+      value={value}
+      placeholder={placeholder}
+      onChange={(e) => onChange(e)}
+    ></input>
   );
 };

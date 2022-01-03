@@ -37,20 +37,19 @@ export const ChatMenu: React.FC<ChatMenuProps> = ({}) => {
             </div>
           </div>
         )}
-        <div className="flex bg-primary justify-between items-end ml-3 my-3">
+        <div className="flex bg-primary items-end justify-between mx-3 my-3 ">
           <InputField
             placeholder="message"
             value={inputText}
             onChange={(e) => inputTextHandler(e)}
-            size="big"
             color="secondary"
+            className="w-full "
           />
           <Button
             name="Send"
             color="secondaryTwo"
-            size="medium"
             onClick={() => console.log("send")}
-            className="mr-3"
+            className="ml-3"
           />
         </div>
       </div>
