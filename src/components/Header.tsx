@@ -1,3 +1,4 @@
+import React from 'react';
 import { useState } from 'react';
 import { FaRegCopy } from 'react-icons/fa';
 import { Button } from './Button';

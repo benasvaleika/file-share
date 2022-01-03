@@ -1,3 +1,4 @@
+import React from 'react';
 import { ReactChild } from 'react';
 
 interface MenuWindowProps {

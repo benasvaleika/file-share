@@ -1,3 +1,5 @@
+import React from 'react';
+
 interface ButtonProps {
   name: string;
   size?: keyof typeof sizeClassNames;

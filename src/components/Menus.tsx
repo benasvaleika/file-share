@@ -1,3 +1,4 @@
+import React from 'react';
 import { ChatMenu } from './ChatMenu';
 import { SharingMenu } from './SharingMenu';
 

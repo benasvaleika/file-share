@@ -1,3 +1,4 @@
+import React from 'react';
 import { MenuWindow } from './MenuWindow';
 import { SharingBody } from './SharingBody';
 import { SharingHeader } from './SharingHeader';
