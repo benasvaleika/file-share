@@ -9,7 +9,7 @@ interface InputFieldProps {
 
 const sizeClassNames = {
   big: "w-54 h-6",
-  small: "w-full max-w-none h-6",
+  small: "w-24 h-6",
 };
 
 const colorClassNames = {
