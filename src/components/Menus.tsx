@@ -6,7 +6,7 @@ interface MenusProps {}
 
 export const Menus: React.FC<MenusProps> = () => {
   return (
-    <div className="flex mt-10 h-4/5 border-green-400 border-solid ">
+    <div className="flex mt-10 h-4/5">
       <SharingMenu />
       <ChatMenu />
     </div>

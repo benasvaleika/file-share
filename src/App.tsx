@@ -1,16 +1,17 @@
 import React from 'react';
 
-import { Footer } from './components/Footer';
-import { Header } from './components/Header';
-import { Menus } from './components/Menus';
+import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+import { HowToUse } from './pages/HowToUse';
+import { Main } from './pages/Main';
 
 function App() {
   return (
-    <div className="h-screen">
-      <Header roomID="XXXX" />
-      <Menus />
-      <Footer />
-    </div>
+    <Router>
+      <Routes>
+        <Route path="/how-to-use" element={<HowToUse />} />
+        <Route path="/" element={<Main />} />
+      </Routes>
+    </Router>
   );
 }
 

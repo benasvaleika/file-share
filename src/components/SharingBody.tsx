@@ -13,6 +13,7 @@ export const SharingBody: React.FC<SharingBodyProps> = () => {
           <File fileName="New Shared File.file" />
           <File fileName="Another Shared File.file" />
           <File fileName="This is a file.file" />
+          <File fileName="Another Shared File.file" />
         </div>
       ) : (
         <div className=" w-[calc(100%-1rem)] ml-2 h-[calc(100%-7rem)] cursor-pointer">
