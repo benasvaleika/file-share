@@ -7,9 +7,11 @@ import { Menus } from '../components/Menus';
 interface MainProps {}
 
 export const Main: React.FC<MainProps> = () => {
+  const roomUrl = window.location.pathname.slice(1);
+
   return (
     <div className="h-screen">
-      <Header roomID="XXXX" />
+      <Header />
       <Menus />
       <Footer />
     </div>

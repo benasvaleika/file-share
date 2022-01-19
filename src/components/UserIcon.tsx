@@ -7,7 +7,7 @@ interface UserIconProps {
 export const UserIcon: React.FC<UserIconProps> = ({ name }) => {
   return (
     <div
-      className={`flex w-12 h-12 bg-secondary-two text-2xl mr-3 
+      className={`flex w-14 h-14 bg-secondary-two text-4xl mr-3 mb-1 
       justify-center items-center rounded-full text-primary 
       font-rhd font-bold cursor-pointer hover:bg-base hover:text-secondary-two
       ease-in-out duration-200`}

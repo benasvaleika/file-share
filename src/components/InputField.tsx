@@ -10,8 +10,9 @@ interface InputFieldProps {
 }
 
 const sizeClassNames = {
-  big: 'w-54 h-6',
-  small: 'w-24 h-6',
+  big: 'w-54 h-7',
+  medium: 'w-36 h-7',
+  small: 'w-24 h-7',
 };
 
 const colorClassNames = {
@@ -29,7 +30,7 @@ export const InputField: React.FC<InputFieldProps> = ({
 }) => {
   return (
     <input
-      className={`rounded-md text-white pl-1 border-none font-rhd font-bold placeholder:text-slate-200 
+      className={`rounded-md text-white pl-1 border-none text-xl font-rhd font-bold placeholder:text-slate-200 
         ${sizeClassNames[size]} ${colorClassNames[color]} ${className}`}
       value={value}
       placeholder={placeholder}

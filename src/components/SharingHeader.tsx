@@ -12,7 +12,7 @@ export const SharingHeader: React.FC<SharingHeaderProps> = () => {
     <>
       {usersConnected ? (
         <>
-          <div className="text-secondary-two font-rhd font-bold ml-2 mt-1">
+          <div className="text-secondary-two text-xl font-rhd font-bold ml-2 mt-1">
             Click on a user, to share files with that user directly:
           </div>
           <div className="flex ml-2 my-2">
@@ -22,7 +22,7 @@ export const SharingHeader: React.FC<SharingHeaderProps> = () => {
           </div>
         </>
       ) : (
-        <div className="text-secondary-two font-rhd font-bold ml-2 mt-1">
+        <div className="text-secondary-two font-rhd text-xl font-bold ml-2 mt-1">
           This room is empty. Share your room code or URL for others to join.
         </div>
       )}

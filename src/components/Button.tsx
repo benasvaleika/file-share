@@ -9,9 +9,9 @@ interface ButtonProps {
 }
 
 const sizeClassNames = {
-  big: 'h-6 w-24',
-  medium: 'h-6 w-20',
-  small: 'h-6 w-14',
+  big: 'h-7 w-24',
+  medium: 'h-7 w-20',
+  small: 'h-7 w-14',
 };
 
 const colorClassNames = {
@@ -28,7 +28,7 @@ export const Button: React.FC<ButtonProps> = ({
 }) => {
   return (
     <button
-      className={` rounded text-white font-rhd font-bold ${colorClassNames[color]} ${sizeClassNames[size]} ${className}`}
+      className={` rounded text-white text-xl font-rhd font-bold ${colorClassNames[color]} ${sizeClassNames[size]} ${className}`}
       onClick={(e) => onClick(e)}
     >
       {name}

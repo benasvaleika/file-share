@@ -44,7 +44,7 @@ export const ChatMenu: React.FC<ChatMenuProps> = () => {
           </>
         ) : (
           <div className="flex justify-center items-center text-center w-full flex-grow ">
-            <div className="text-secondary-two font-rhd font-bold">No Messages</div>
+            <div className="text-secondary-two text-xl font-rhd font-bold">No Messages</div>
           </div>
         )}
         <form className="flex bg-primary items-end justify-between mx-3 my-3 ">

@@ -20,7 +20,7 @@ export const MenuWindow: React.FC<MenuWindowProps> = ({
 }) => {
   return (
     <div className={`flex flex-col h-full ${menuClassName}`}>
-      <div className={`text-white text-xl font-rhd font-bold mb-2 ${ml}`}>{menuTitle}</div>
+      <div className={`text-white text-2xl font-rhd font-bold mb-2 ${ml}`}>{menuTitle}</div>
       <div
         className={`w-[calc(100%-3rem)] ml h-[calc(100%-36px)] border-solid bg-primary rounded-lg  ${ml} ${mr} ${bodyClassName}`}
       >

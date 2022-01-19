@@ -3,7 +3,7 @@ interface FooterProps {}
 
 export const Footer: React.FC<FooterProps> = () => {
   return (
-    <div className="flex justify-center w-full mt-4 text-white font-rhd text-sm">
+    <div className="flex justify-center w-full mt-6 text-white font-rhd">
       <div className="flex">
         <div>About</div>
         <div>&nbsp;|&nbsp;</div>
