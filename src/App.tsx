@@ -9,6 +9,7 @@ function App() {
     <Router>
       <Routes>
         <Route path="/how-to-use" element={<HowToUse />} />
+        <Route path="/:roomId" element={<Main />} />
         <Route path="/" element={<Main />} />
       </Routes>
     </Router>
