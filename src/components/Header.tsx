@@ -8,18 +8,19 @@ import { InputField } from './InputField';
 interface HeaderProps {}
 
 export const Header: React.FC<HeaderProps> = () => {
-  const [roomIdVal, setRoomIdVal] = useState<string>('');
+  const [roomIdInputVal, setRoomIdInputVal] = useState<string>('');
 
   const roomID = window.location.pathname.slice(1);
+  const navigate = useNavigate();
 
   const roomIdChangeHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
     e.preventDefault();
-    //Implement Regex to according to Room ID
-    setRoomIdVal(e.target.value);
+    setRoomIdInputVal(e.target.value);
   };
 
   const onJoinHandler = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
     e.preventDefault();
+    navigate(`/${roomIdInputVal.replace(/[^a-zA-Z0-9]/gi, '')}`);
   };
 
   return (
@@ -31,7 +32,7 @@ export const Header: React.FC<HeaderProps> = () => {
           <div className="flex">
             <InputField
               placeholder="room id"
-              value={roomIdVal}
+              value={roomIdInputVal}
               onChange={(e) => roomIdChangeHandler(e)}
               size="medium"
               color="primary"
