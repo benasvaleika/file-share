@@ -15,16 +15,13 @@ export const File: React.FC<FileProps> = ({ fileName }) => {
       </div>
       <div className="flex items-center mr-6">
         <Button
-          className="mr-2 hover:bg-base hover:text-secondary-two"
-          name="Accept"
+          className="mr-2 hover:bg-base"
           color="secondaryTwo"
+          name="Accept"
           onClick={() => console.log('acc')}
         />
-        <Button
-          className="hover:bg-base hover:text-secondary-two"
-          name="Decline"
-          onClick={() => console.log('dec')}
-        />
+
+        <Button className="hover:bg-base" name="Decline" onClick={() => console.log('dec')} />
       </div>
     </div>
   );
