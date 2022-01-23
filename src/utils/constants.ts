@@ -1,5 +1,5 @@
-import dotenv from 'dotenv';
+import { config as dotenv } from 'dotenv';
 
-dotenv.config();
+dotenv();
 
 export const WS_URL = process.env.WS_URL;
