@@ -2,6 +2,7 @@ import React from 'react';
 import { useState } from 'react';
 import { FaRegCopy } from 'react-icons/fa';
 import { useNavigate } from 'react-router-dom';
+import useRoomIdStore from '../stores/useRoomIdStore';
 import { Button } from './Button';
 import { InputField } from './InputField';
 
@@ -9,8 +10,8 @@ interface HeaderProps {}
 
 export const Header: React.FC<HeaderProps> = () => {
   const [roomIdInputVal, setRoomIdInputVal] = useState<string>('');
+  const roomId = useRoomIdStore((state) => state.roomId);
 
-  const roomID = window.location.pathname.slice(1);
   const navigate = useNavigate();
 
   const roomIdChangeHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -21,6 +22,7 @@ export const Header: React.FC<HeaderProps> = () => {
   const onJoinHandler = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
     e.preventDefault();
     navigate(`/${roomIdInputVal.replace(/[^a-zA-Z0-9]/gi, '')}`);
+    window.location.reload();
   };
 
   return (
@@ -29,7 +31,7 @@ export const Header: React.FC<HeaderProps> = () => {
       <div className="flex mr-10">
         <div className="flex mr-6 ">
           <div className="text-white font-rhd font-bold text-2xl mr-2">Join Room:</div>
-          <div className="flex">
+          <form className="flex">
             <InputField
               placeholder="room id"
               value={roomIdInputVal}
@@ -45,10 +47,10 @@ export const Header: React.FC<HeaderProps> = () => {
               onClick={(e) => onJoinHandler(e)}
               className="ml-1"
             />
-          </div>
+          </form>
         </div>
         <div className="text-white font-rhd font-bold flex text-2xl">
-          <div>Room Id: {roomID}</div>
+          <div>Room Id: {roomId}</div>
           <FaRegCopy className="ml-1 cursor-pointer hover:text-secondary-one ease-in duration-150" />
         </div>
       </div>
