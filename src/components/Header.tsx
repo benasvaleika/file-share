@@ -1,7 +1,6 @@
 import React from 'react';
 import { useState } from 'react';
 import { FaRegCopy } from 'react-icons/fa';
-import { useNavigate } from 'react-router-dom';
 import useRoomIdStore from '../stores/useRoomIdStore';
 import { Button } from './Button';
 import { InputField } from './InputField';
@@ -12,8 +11,6 @@ export const Header: React.FC<HeaderProps> = () => {
   const [roomIdInputVal, setRoomIdInputVal] = useState<string>('');
   const roomId = useRoomIdStore((state) => state.roomId);
 
-  const navigate = useNavigate();
-
   const roomIdChangeHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
     e.preventDefault();
     setRoomIdInputVal(e.target.value);
@@ -21,8 +18,7 @@ export const Header: React.FC<HeaderProps> = () => {
 
   const onJoinHandler = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
     e.preventDefault();
-    navigate(`/${roomIdInputVal.replace(/[^a-zA-Z0-9]/gi, '')}`);
-    window.location.reload();
+    window.location.href = `/${roomIdInputVal.replace(/[^a-zA-Z0-9]/gi, '')}`;
   };
 
   return (
