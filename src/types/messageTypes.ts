@@ -6,3 +6,8 @@ export interface InitialMessageType {
   userLetter: string;
   roomIdSuggested: string;
 }
+
+export interface RoomIdMessageType {
+  type: MessageEnum.ROOMID;
+  roomId: string;
+}
