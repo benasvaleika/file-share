@@ -7,6 +7,7 @@ import { InputField } from './InputField';
 import { MenuWindow } from './MenuWindow';
 import { v4 as uuidv4 } from 'uuid';
 import { getChatCurrTime } from '../utils/chatUtils';
+import { wsSendMessageManager } from '../services/websocket/wsSendMessageManager';
 
 interface ChatMenuProps {}
 
@@ -26,6 +27,7 @@ export const ChatMenu: React.FC<ChatMenuProps> = () => {
       return;
     }
     const newChatMsg: ChatMessageModel = { date: getChatCurrTime(), msgContent: inputText };
+    wsSendMessageManager(newChatMsg);
     setChatMessages([...chatMessages, newChatMsg]);
     setInputText('');
   };
