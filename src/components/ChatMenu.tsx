@@ -1,19 +1,20 @@
 import React, { useEffect, useRef } from 'react';
 import { useState } from 'react';
-import { ChatMessageModel } from '../types/models';
 import { Button } from './Button';
 import { ChatMessage } from './ChatMessage';
 import { InputField } from './InputField';
 import { MenuWindow } from './MenuWindow';
 import { v4 as uuidv4 } from 'uuid';
 import { getChatCurrTime } from '../utils/chatUtils';
-import { wsSendMessageManager } from '../services/websocket/wsSendMessageManager';
+import wsSendMessageHandler from '../services/websocket/wsSendMessageManager';
+import { ChatMessageType } from '../types/messageTypes';
+import { MessageEnum } from '../types/mesageEnum';
 
 interface ChatMenuProps {}
 
 export const ChatMenu: React.FC<ChatMenuProps> = () => {
   const [inputText, setInputText] = useState('');
-  const [chatMessages, setChatMessages] = useState<ChatMessageModel[]>([]);
+  const [chatMessages, setChatMessages] = useState<ChatMessageType[]>([]);
 
   const messagesEndRef = useRef<null | HTMLDivElement>(null);
 
@@ -26,8 +27,12 @@ export const ChatMenu: React.FC<ChatMenuProps> = () => {
     if (inputText === '') {
       return;
     }
-    const newChatMsg: ChatMessageModel = { date: getChatCurrTime(), msgContent: inputText };
-    wsSendMessageManager(newChatMsg);
+    const newChatMsg: ChatMessageType = {
+      type: MessageEnum.CHAT_MESSAGE,
+      date: getChatCurrTime(),
+      msgContent: inputText,
+    };
+    wsSendMessageHandler(newChatMsg);
     setChatMessages([...chatMessages, newChatMsg]);
     setInputText('');
   };

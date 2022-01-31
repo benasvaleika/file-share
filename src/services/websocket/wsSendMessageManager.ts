@@ -1,7 +1,7 @@
 import webSocket from '../../config/socketConfig';
 
 // Replace any with message type
-export const wsSendMessageManager = (messageObj: any) => {
+const wsSendMessageHandler = (messageObj: any) => {
   const messageJSON = JSON.stringify(messageObj);
   const ws = webSocket;
 
@@ -12,3 +12,5 @@ export const wsSendMessageManager = (messageObj: any) => {
     console.log('ws readystate error');
   }
 };
+
+export default wsSendMessageHandler;
