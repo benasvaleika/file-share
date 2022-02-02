@@ -9,12 +9,16 @@ import { getChatCurrTime } from '../utils/chatUtils';
 import wsSendMessageHandler from '../services/websocket/wsSendMessageManager';
 import { ChatMessageType } from '../types/messageTypes';
 import { MessageEnum } from '../types/mesageEnum';
+import useChatMessageStore from '../stores/useChatMessagesStore';
 
 interface ChatMenuProps {}
 
 export const ChatMenu: React.FC<ChatMenuProps> = () => {
   const [inputText, setInputText] = useState('');
-  const [chatMessages, setChatMessages] = useState<ChatMessageType[]>([]);
+  // const [chatMessages, setChatMessages] = useState<ChatMessageType[]>([]);
+
+  const chatMessages = useChatMessageStore((state) => state.ChatMessages);
+  const addNewChatMessage = useChatMessageStore((state) => state.addNewChatMessage);
 
   const messagesEndRef = useRef<null | HTMLDivElement>(null);
 
@@ -33,7 +37,7 @@ export const ChatMenu: React.FC<ChatMenuProps> = () => {
       msgContent: inputText,
     };
     wsSendMessageHandler(newChatMsg);
-    setChatMessages([...chatMessages, newChatMsg]);
+    addNewChatMessage(newChatMsg);
     setInputText('');
   };
 

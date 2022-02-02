@@ -1,25 +1,32 @@
+import { ChatMessageType } from './messageTypes';
+
 export interface RoomIdStoreModel {
   roomId: string | null;
   setRoomId: (newRoomId: string) => void;
 }
 
-export interface UserLetterModel {
+export interface UserLetterStoreModel {
   userLetter: string | null;
   setUserLetter: (newUserLetter: string) => void;
 }
 
-export interface RoomIdSuggestedModel {
+export interface RoomIdSuggestedStoreModel {
   roomIdSuggested: string | null;
   setRoomIdSuggested: (newRoomIdSuggested: string) => void;
 }
 
-export interface UserIdModel {
+export interface UserIdStoreModel {
   userId: string | null;
   setUserId: (newUserId: string) => void;
 }
 
-export interface WsConnectedStore {
+export interface WsConnectedStoreModel {
   wsConnected: boolean;
   setWsConnectedTrue: () => void;
   setWsConnectedFalse: () => void;
+}
+
+export interface ChatMessagesStoreModel {
+  ChatMessages: ChatMessageType[];
+  addNewChatMessage: (newChatMessage: ChatMessageType) => void;
 }
