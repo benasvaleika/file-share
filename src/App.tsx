@@ -13,7 +13,6 @@ function App() {
 
   useEffect(() => {
     ws.addEventListener('open', () => {
-      console.log('New Connection');
       wsOpenHandler(ws);
     });
 
