@@ -1,7 +1,7 @@
 import create from 'zustand';
-import { UserIdModel } from '../types/storeModels';
+import { UserIdStoreModel } from '../types/storeModels';
 
-const useUserIdStore = create<UserIdModel>((set) => ({
+const useUserIdStore = create<UserIdStoreModel>((set) => ({
   userId: null,
   setUserId: (newUserId: string) => set(() => ({ userId: newUserId })),
 }));

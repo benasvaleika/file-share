@@ -1,7 +1,7 @@
 import create from 'zustand';
-import { WsConnectedStore } from '../types/storeModels';
+import { WsConnectedStoreModel } from '../types/storeModels';
 
-const useWsConnectedStore = create<WsConnectedStore>((set) => ({
+const useWsConnectedStore = create<WsConnectedStoreModel>((set) => ({
   wsConnected: false,
   setWsConnectedTrue: () => set(() => ({ wsConnected: true })),
   setWsConnectedFalse: () => set(() => ({ wsConnected: false })),

@@ -1,7 +1,7 @@
 import create from 'zustand';
-import { UserLetterModel } from '../types/storeModels';
+import { UserLetterStoreModel } from '../types/storeModels';
 
-const useUserLetterStore = create<UserLetterModel>((set) => ({
+const useUserLetterStore = create<UserLetterStoreModel>((set) => ({
   userLetter: null,
   setUserLetter: (newUserLetter: string) => set(() => ({ userLetter: newUserLetter })),
 }));

@@ -1,7 +1,7 @@
 import create from 'zustand';
-import { RoomIdSuggestedModel } from '../types/storeModels';
+import { RoomIdSuggestedStoreModel } from '../types/storeModels';
 
-const useRoomIdSuggestedStore = create<RoomIdSuggestedModel>((set) => ({
+const useRoomIdSuggestedStore = create<RoomIdSuggestedStoreModel>((set) => ({
   roomIdSuggested: null,
   setRoomIdSuggested: (newRoomIdSuggested: string) =>
     set(() => ({ roomIdSuggested: newRoomIdSuggested })),
