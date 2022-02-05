@@ -1,4 +1,4 @@
-import { ChatMessageType } from './messageTypes';
+import { ChatMessageType, RoomUserType } from './messageTypes';
 
 export interface RoomIdStoreModel {
   roomId: string | null;
@@ -29,4 +29,9 @@ export interface WsConnectedStoreModel {
 export interface ChatMessagesStoreModel {
   ChatMessages: ChatMessageType[];
   addNewChatMessage: (newChatMessage: ChatMessageType) => void;
+}
+
+export interface CurrRoomUsersStoreModel {
+  CurrRoomUsers: RoomUserType[];
+  setCurrRoomUsers: (currRoomUsers: RoomUserType[]) => void;
 }

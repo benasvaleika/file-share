@@ -17,3 +17,13 @@ export interface RoomIdMessageType {
   type: MessageEnum.ROOMID;
   roomId: string;
 }
+
+export interface RoomUserType {
+  id: string;
+  userLetter: string;
+}
+
+export interface CurrRoomUsersType {
+  type: MessageEnum.CURR_ROOM_USERS;
+  roomUsers: RoomUserType[];
+}
