@@ -1,24 +1,32 @@
 import React from 'react';
-import { useState } from 'react';
+import useCurrRoomUsersStore from '../stores/useCurrRoomUsersStore';
+import useUserIdStore from '../stores/useUserIdStore';
+import useUserLetterStore from '../stores/useUserLetter';
 import { Line } from './Line';
 import { UserIcon } from './UserIcon';
 
 interface SharingHeaderProps {}
 
 export const SharingHeader: React.FC<SharingHeaderProps> = () => {
-  const [usersConnected, setUsersConnected] = useState(true);
+  const userId = useUserIdStore((store) => store.userId);
+  const userLetter = useUserLetterStore((store) => store.userLetter);
+  const currRoomUsers = useCurrRoomUsersStore((state) => state.CurrRoomUsers).filter(
+    (u) => u.id !== userId
+  );
 
+  console.log(currRoomUsers);
   return (
     <>
-      {usersConnected ? (
+      {currRoomUsers.length > 0 ? (
         <>
           <div className="text-secondary-two text-xl font-rhd font-bold ml-2 mt-1">
             Click on a user, to share files with that user directly:
           </div>
           <div className="flex ml-2 my-2">
-            <UserIcon name="A" />
-            <UserIcon name="W" />
-            <UserIcon name="Y" />
+            {userId && userLetter && <UserIcon key={userId} userId={userId} name={userLetter} />}
+            {currRoomUsers.map((usr) => {
+              return <UserIcon key={usr.id} userId={usr.id} name={usr.userLetter} />;
+            })}
           </div>
         </>
       ) : (

@@ -1,5 +1,9 @@
 import { MessageEnum } from '../../types/mesageEnum';
-import { chatMessageHandler, initialMessageHandler } from './wsMessageHandlers';
+import {
+  chatMessageHandler,
+  currRoomUsersHandler,
+  initialMessageHandler,
+} from './wsMessageHandlers';
 
 export const wsMessageManager = (event: MessageEvent) => {
   const parsedMsg = JSON.parse(event.data);
@@ -10,6 +14,9 @@ export const wsMessageManager = (event: MessageEvent) => {
       break;
     case MessageEnum.CHAT_MESSAGE:
       chatMessageHandler(parsedMsg);
+      break;
+    case MessageEnum.CURR_ROOM_USERS:
+      currRoomUsersHandler(parsedMsg);
       break;
     default:
       // Add default handling

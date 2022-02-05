@@ -1,13 +1,15 @@
 import useChatMessageStore from '../../stores/useChatMessagesStore';
+import useCurrRoomUsersStore from '../../stores/useCurrRoomUsersStore';
 import useRoomIdSuggestedStore from '../../stores/useRoomIdSuggestedStore';
 import useUserIdStore from '../../stores/useUserIdStore';
 import useUserLetterStore from '../../stores/useUserLetter';
-import { ChatMessageType, InitialMessageType } from '../../types/messageTypes';
+import { ChatMessageType, CurrRoomUsersType, InitialMessageType } from '../../types/messageTypes';
 
 const userId = useUserIdStore.getState();
 const userLetter = useUserLetterStore.getState();
 const roomIdSuggested = useRoomIdSuggestedStore.getState();
 const chatMessage = useChatMessageStore.getState();
+const currRoomUsers = useCurrRoomUsersStore.getState();
 
 export const initialMessageHandler = (message: InitialMessageType): void => {
   userLetter.setUserLetter(message.userLetter);
@@ -17,4 +19,8 @@ export const initialMessageHandler = (message: InitialMessageType): void => {
 
 export const chatMessageHandler = (message: ChatMessageType): void => {
   chatMessage.addNewChatMessage(message);
+};
+
+export const currRoomUsersHandler = (message: CurrRoomUsersType): void => {
+  currRoomUsers.setCurrRoomUsers(message.roomUsers);
 };
