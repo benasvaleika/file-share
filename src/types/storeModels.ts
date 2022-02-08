@@ -36,7 +36,7 @@ export interface CurrRoomUsersStoreModel {
   setCurrRoomUsers: (currRoomUsers: RoomUserType[]) => void;
 }
 
-export interface FileStoreModel {
+export interface FileTransStoreModel {
   Files: FileType[];
   addFile: (newFile: FileType) => void;
   removeFile: (fileId: string) => void;
