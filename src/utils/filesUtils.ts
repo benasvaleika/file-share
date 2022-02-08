@@ -1,4 +1,4 @@
-import { FileType } from './messageTypes';
+import { FileType } from '../types/messageTypes';
 import { v4 as uuidv4 } from 'uuid';
 
 export const parseInputFiles = (e: React.ChangeEvent<HTMLInputElement>, userId: string) => {
