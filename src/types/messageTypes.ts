@@ -30,7 +30,7 @@ export interface CurrRoomUsersType {
 
 export interface FileType {
   id: string;
-  destinationId?: string;
+  destinationId: string;
   name: string;
   size: number;
   type: string;

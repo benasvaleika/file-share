@@ -1,7 +1,9 @@
 import React from 'react';
 import useCurrRoomUsersStore from '../stores/useCurrRoomUsersStore';
+import useFileStore from '../stores/useFilesStore';
 import useUserIdStore from '../stores/useUserIdStore';
 import useUserLetterStore from '../stores/useUserLetter';
+import { parseInputFiles } from '../types/filesUtils';
 import { Line } from './Line';
 import { UserIcon } from './UserIcon';
 
@@ -13,8 +15,15 @@ export const SharingHeader: React.FC<SharingHeaderProps> = () => {
   const currRoomUsers = useCurrRoomUsersStore((state) => state.CurrRoomUsers).filter(
     (u) => u.id !== userId
   );
+  const addFile = useFileStore((state) => state.addFile);
 
-  console.log(currRoomUsers);
+  const fileUploadHandler = (e: React.ChangeEvent<HTMLInputElement>, userId: string) => {
+    e.preventDefault();
+    const parsedFiles = parseInputFiles(e, userId);
+    // TODO send items to signaling server
+    parsedFiles.forEach((f) => addFile(f));
+  };
+
   return (
     <>
       {currRoomUsers.length > 0 ? (
@@ -23,9 +32,19 @@ export const SharingHeader: React.FC<SharingHeaderProps> = () => {
             Click on a user, to share files with that user directly:
           </div>
           <div className="flex ml-2 my-2">
-            {userId && userLetter && <UserIcon key={userId} userId={userId} name={userLetter} />}
+            {userId && userLetter && (
+              <UserIcon isCurrUser key={userId} userId={userId} name={userLetter} />
+            )}
             {currRoomUsers.map((usr) => {
-              return <UserIcon key={usr.id} userId={usr.id} name={usr.userLetter} />;
+              return (
+                <UserIcon
+                  isCurrUser={false}
+                  key={usr.id}
+                  userId={usr.id}
+                  name={usr.userLetter}
+                  fileUploadHandler={(e, userId) => fileUploadHandler(e, userId)}
+                />
+              );
             })}
           </div>
         </>
