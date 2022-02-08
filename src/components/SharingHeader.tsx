@@ -1,9 +1,12 @@
 import React from 'react';
+import wsSendMessageHandler from '../services/websocket/wsSendMessageManager';
 import useCurrRoomUsersStore from '../stores/useCurrRoomUsersStore';
-import useFileStore from '../stores/useFilesStore';
+import useFileStore from '../stores/useFileTransfersStore';
 import useUserIdStore from '../stores/useUserIdStore';
 import useUserLetterStore from '../stores/useUserLetter';
-import { parseInputFiles } from '../types/filesUtils';
+import { parseInputFiles } from '../utils/filesUtils';
+import { MessageEnum } from '../types/mesageEnum';
+import { FileTransMessageType } from '../types/messageTypes';
 import { Line } from './Line';
 import { UserIcon } from './UserIcon';
 
@@ -20,7 +23,10 @@ export const SharingHeader: React.FC<SharingHeaderProps> = () => {
   const fileUploadHandler = (e: React.ChangeEvent<HTMLInputElement>, userId: string) => {
     e.preventDefault();
     const parsedFiles = parseInputFiles(e, userId);
-    // TODO send items to signaling server
+    wsSendMessageHandler({
+      type: MessageEnum.FILE_TRANS,
+      files: parsedFiles,
+    } as FileTransMessageType);
     parsedFiles.forEach((f) => addFile(f));
   };
 
