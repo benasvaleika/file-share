@@ -1,4 +1,4 @@
-import { ChatMessageType, RoomUserType } from './messageTypes';
+import { ChatMessageType, FileType, RoomUserType } from './messageTypes';
 
 export interface RoomIdStoreModel {
   roomId: string | null;
@@ -34,4 +34,10 @@ export interface ChatMessagesStoreModel {
 export interface CurrRoomUsersStoreModel {
   CurrRoomUsers: RoomUserType[];
   setCurrRoomUsers: (currRoomUsers: RoomUserType[]) => void;
+}
+
+export interface FileStoreModel {
+  Files: FileType[];
+  addFile: (newFile: FileType) => void;
+  removeFile: (fileId: string) => void;
 }

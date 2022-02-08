@@ -3,4 +3,5 @@ export enum MessageEnum {
   ROOMID = 'roomid',
   CHAT_MESSAGE = 'chatmessage',
   CURR_ROOM_USERS = 'currroomusers',
+  FILE_TRANS = 'filetrans',
 }

@@ -27,3 +27,17 @@ export interface CurrRoomUsersType {
   type: MessageEnum.CURR_ROOM_USERS;
   roomUsers: RoomUserType[];
 }
+
+export interface FileType {
+  id: string;
+  destinationId?: string;
+  name: string;
+  size: number;
+  type: string;
+  lastModified: number;
+}
+
+export interface FileTransMessageType {
+  type: MessageEnum.FILE_TRANS;
+  files: FileType[];
+}
