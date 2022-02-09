@@ -37,7 +37,7 @@ export interface CurrRoomUsersStoreModel {
 }
 
 export interface FileTransStoreModel {
-  Files: FileType[];
-  addFile: (newFile: FileType) => void;
-  removeFile: (fileId: string) => void;
+  FileTransfers: FileType[];
+  addFileTransfer: (newFile: FileType) => void;
+  removeFileTransfer: (fileId: string) => void;
 }

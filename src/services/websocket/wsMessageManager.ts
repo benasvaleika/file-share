@@ -2,6 +2,7 @@ import { MessageEnum } from '../../types/mesageEnum';
 import {
   chatMessageHandler,
   currRoomUsersHandler,
+  fileTransMessageHandler,
   initialMessageHandler,
 } from './wsMessageHandlers';
 
@@ -17,6 +18,9 @@ export const wsMessageManager = (event: MessageEvent) => {
       break;
     case MessageEnum.CURR_ROOM_USERS:
       currRoomUsersHandler(parsedMsg);
+      break;
+    case MessageEnum.FILE_TRANS:
+      fileTransMessageHandler(parsedMsg);
       break;
     default:
       // Add default handling

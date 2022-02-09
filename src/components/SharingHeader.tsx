@@ -18,7 +18,7 @@ export const SharingHeader: React.FC<SharingHeaderProps> = () => {
   const currRoomUsers = useCurrRoomUsersStore((state) => state.CurrRoomUsers).filter(
     (u) => u.id !== userId
   );
-  const addFile = useFileStore((state) => state.addFile);
+  const addFile = useFileStore((state) => state.addFileTransfer);
 
   const fileUploadHandler = (e: React.ChangeEvent<HTMLInputElement>, userId: string) => {
     e.preventDefault();
