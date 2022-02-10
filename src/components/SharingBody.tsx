@@ -1,19 +1,51 @@
 import React from 'react';
 import { FaPlus } from 'react-icons/fa';
+import wsSendMessageHandler from '../services/websocket/wsSendMessageManager';
 import useFileTransfersStore from '../stores/useFileTransfersStore';
+import { MessageEnum } from '../types/mesageEnum';
+import { FileTransCancelMessageType, FileTransRejectMessageType } from '../types/messageTypes';
 import { File } from './File';
 
 interface SharingBodyProps {}
 
 export const SharingBody: React.FC<SharingBodyProps> = () => {
   const fileTransfers = useFileTransfersStore((state) => state.FileTransfers);
+  const removeFileTransfer = useFileTransfersStore((state) => state.removeFileTransfer);
+
+  const fileCancelHandler = (fileId: string, fileDestinationId: string) => {
+    wsSendMessageHandler({
+      type: MessageEnum.FILE_TRANS_CANCEL,
+      fileId: fileId,
+      fileDestinationId: fileDestinationId,
+    } as FileTransCancelMessageType);
+    removeFileTransfer(fileId);
+  };
+
+  const fileRejectHandler = (fileId: string, fileSourceId: string) => {
+    wsSendMessageHandler({
+      type: MessageEnum.FILE_TRANS_REJECT,
+      fileId: fileId,
+      fileSourceId: fileSourceId,
+    } as FileTransRejectMessageType);
+    removeFileTransfer(fileId);
+  };
 
   return (
     <>
       {fileTransfers.length > 0 ? (
         <div>
           {fileTransfers.map((f) => {
-            return <File key={f.id} outgoing={f.outgoing} file={f} />;
+            return (
+              <File
+                key={f.id}
+                outgoing={f.outgoing}
+                file={f}
+                onFileCancel={(fileId, fileDestinationId) =>
+                  fileCancelHandler(fileId, fileDestinationId)
+                }
+                onFileReject={(fileId, fileSourceId) => fileRejectHandler(fileId, fileSourceId)}
+              />
+            );
           })}
         </div>
       ) : (

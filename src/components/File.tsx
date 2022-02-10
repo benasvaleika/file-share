@@ -6,9 +6,11 @@ import { Button } from './Button';
 interface FileProps {
   file: FileType;
   outgoing: boolean;
+  onFileCancel: (fileId: string, fileDestinationId: string) => void;
+  onFileReject: (fileId: string, fileSourceId: string) => void;
 }
 
-export const File: React.FC<FileProps> = ({ file, outgoing }) => {
+export const File: React.FC<FileProps> = ({ file, outgoing, onFileCancel, onFileReject }) => {
   return (
     <div className="text-secondary-two ml-2 flex justify-between mt-4">
       <div className="flex items-center">
@@ -20,7 +22,7 @@ export const File: React.FC<FileProps> = ({ file, outgoing }) => {
           <Button
             className="hover:bg-base"
             name="Cancel"
-            onClick={() => console.log('Cancel file: ' + file.name)}
+            onClick={() => onFileCancel(file.id, file.destinationId)}
           />
         ) : (
           <>
@@ -33,7 +35,7 @@ export const File: React.FC<FileProps> = ({ file, outgoing }) => {
             <Button
               className="hover:bg-base"
               name="Decline"
-              onClick={() => console.log('Decline file: ' + file.name)}
+              onClick={() => onFileReject(file.id, file.sourceId)}
             />
           </>
         )}

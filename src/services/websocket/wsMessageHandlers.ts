@@ -7,6 +7,7 @@ import useUserLetterStore from '../../stores/useUserLetter';
 import {
   ChatMessageType,
   CurrRoomUsersType,
+  FileTransCancelMessageType,
   FileTransMessageType,
   InitialMessageType,
 } from '../../types/messageTypes';
@@ -37,4 +38,12 @@ export const fileTransMessageHandler = (message: FileTransMessageType): void => 
     f.outgoing = false;
     fileTransfers.addFileTransfer(f);
   });
+};
+
+export const fileTransCancelMessageHandler = (message: FileTransCancelMessageType): void => {
+  fileTransfers.removeFileTransfer(message.fileId);
+};
+
+export const fileTransRejectMessageHandler = (message: FileTransCancelMessageType): void => {
+  fileTransfers.removeFileTransfer(message.fileId);
 };

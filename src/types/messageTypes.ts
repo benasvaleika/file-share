@@ -31,6 +31,7 @@ export interface CurrRoomUsersType {
 export interface FileType {
   id: string;
   destinationId: string;
+  sourceId: string;
   name: string;
   size: number;
   type: string;
@@ -41,4 +42,16 @@ export interface FileType {
 export interface FileTransMessageType {
   type: MessageEnum.FILE_TRANS;
   files: FileType[];
+}
+
+export interface FileTransCancelMessageType {
+  type: MessageEnum.FILE_TRANS_CANCEL;
+  fileId: string;
+  fileDestinationId: string;
+}
+
+export interface FileTransRejectMessageType {
+  type: MessageEnum.FILE_TRANS_REJECT;
+  fileId: string;
+  fileSourceId: string;
 }
