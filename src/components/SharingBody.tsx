@@ -1,20 +1,20 @@
 import React from 'react';
 import { FaPlus } from 'react-icons/fa';
+import useFileTransfersStore from '../stores/useFileTransfersStore';
 import { File } from './File';
 
 interface SharingBodyProps {}
 
 export const SharingBody: React.FC<SharingBodyProps> = () => {
-  const fileToggle = false;
+  const fileTransfers = useFileTransfersStore((state) => state.FileTransfers);
 
   return (
     <>
-      {fileToggle ? (
+      {fileTransfers.length > 0 ? (
         <div>
-          <File fileName="New Shared File.file" />
-          <File fileName="Another Shared File.file" />
-          <File fileName="This is a file.file" />
-          <File fileName="Another Shared File.file" />
+          {fileTransfers.map((f) => {
+            return <File key={f.id} outgoing={f.outgoing} file={f} />;
+          })}
         </div>
       ) : (
         <div className=" w-[calc(100%-1rem)] ml-2 h-[calc(100%-7rem)] ">

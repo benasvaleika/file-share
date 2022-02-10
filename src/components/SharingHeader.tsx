@@ -18,7 +18,7 @@ export const SharingHeader: React.FC<SharingHeaderProps> = () => {
   const currRoomUsers = useCurrRoomUsersStore((state) => state.CurrRoomUsers).filter(
     (u) => u.id !== userId
   );
-  const addFile = useFileStore((state) => state.addFileTransfer);
+  const addFileTransfer = useFileStore((state) => state.addFileTransfer);
 
   const fileUploadHandler = (e: React.ChangeEvent<HTMLInputElement>, userId: string) => {
     e.preventDefault();
@@ -27,7 +27,7 @@ export const SharingHeader: React.FC<SharingHeaderProps> = () => {
       type: MessageEnum.FILE_TRANS,
       files: parsedFiles,
     } as FileTransMessageType);
-    parsedFiles.forEach((f) => addFile(f));
+    parsedFiles.forEach((f) => addFileTransfer(f));
   };
 
   return (

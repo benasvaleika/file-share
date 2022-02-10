@@ -35,6 +35,7 @@ export interface FileType {
   size: number;
   type: string;
   lastModified: number;
+  outgoing: boolean;
 }
 
 export interface FileTransMessageType {

@@ -12,6 +12,7 @@ export const parseInputFiles = (e: React.ChangeEvent<HTMLInputElement>, userId: 
         size: e.target.files[i].size,
         type: e.target.files[i].type,
         lastModified: e.target.files[i].lastModified,
+        outgoing: true,
       } as FileType);
     }
   }

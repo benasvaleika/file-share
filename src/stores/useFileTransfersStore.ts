@@ -1,7 +1,7 @@
 import create from 'zustand';
 import { FileTransStoreModel } from '../types/storeModels';
 
-const useFileStore = create<FileTransStoreModel>((set) => ({
+const useFileTransfersStore = create<FileTransStoreModel>((set) => ({
   FileTransfers: [],
   addFileTransfer: (newFile) =>
     set((state) => ({ FileTransfers: state.FileTransfers.concat(newFile) })),
@@ -9,4 +9,4 @@ const useFileStore = create<FileTransStoreModel>((set) => ({
     set((state) => ({ FileTransfers: state.FileTransfers.filter((f) => f.id !== fileId) })),
 }));
 
-export default useFileStore;
+export default useFileTransfersStore;
