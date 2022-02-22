@@ -3,6 +3,7 @@ import {
   chatMessageHandler,
   currRoomUsersHandler,
   fileTransCancelMessageHandler,
+  fileTransDropMessageHandler,
   fileTransMessageHandler,
   fileTransRejectMessageHandler,
   initialMessageHandler,
@@ -29,6 +30,9 @@ export const wsMessageManager = (event: MessageEvent) => {
       break;
     case MessageEnum.FILE_TRANS_REJECT:
       fileTransRejectMessageHandler(parsedMsg);
+      break;
+    case MessageEnum.FILE_TRANS_DROP:
+      fileTransDropMessageHandler(parsedMsg);
       break;
     default:
       // Add default handling

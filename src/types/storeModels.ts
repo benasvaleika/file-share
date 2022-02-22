@@ -40,4 +40,5 @@ export interface FileTransStoreModel {
   FileTransfers: FileType[];
   addFileTransfer: (newFile: FileType) => void;
   removeFileTransfer: (fileId: string) => void;
+  dropFileTransfer: (fileSourceId: string) => void;
 }

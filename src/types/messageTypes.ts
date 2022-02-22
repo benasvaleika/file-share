@@ -55,3 +55,8 @@ export interface FileTransRejectMessageType {
   fileId: string;
   fileSourceId: string;
 }
+
+export interface FileTransDropMessageType {
+  type: MessageEnum.FILE_TRANS_DROP;
+  fileSourceId: string;
+}

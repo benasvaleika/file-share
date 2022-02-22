@@ -6,4 +6,5 @@ export enum MessageEnum {
   FILE_TRANS = 'filetrans',
   FILE_TRANS_CANCEL = 'filetranscancel',
   FILE_TRANS_REJECT = 'filetransreject',
+  FILE_TRANS_DROP = 'filetransdrop',
 }

@@ -8,6 +8,7 @@ import {
   ChatMessageType,
   CurrRoomUsersType,
   FileTransCancelMessageType,
+  FileTransDropMessageType,
   FileTransMessageType,
   InitialMessageType,
 } from '../../types/messageTypes';
@@ -46,4 +47,8 @@ export const fileTransCancelMessageHandler = (message: FileTransCancelMessageTyp
 
 export const fileTransRejectMessageHandler = (message: FileTransCancelMessageType): void => {
   fileTransfers.removeFileTransfer(message.fileId);
+};
+
+export const fileTransDropMessageHandler = (message: FileTransDropMessageType): void => {
+  fileTransfers.dropFileTransfer(message.fileSourceId);
 };

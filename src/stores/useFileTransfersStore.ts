@@ -7,6 +7,10 @@ const useFileTransfersStore = create<FileTransStoreModel>((set) => ({
     set((state) => ({ FileTransfers: state.FileTransfers.concat(newFile) })),
   removeFileTransfer: (fileId) =>
     set((state) => ({ FileTransfers: state.FileTransfers.filter((f) => f.id !== fileId) })),
+  dropFileTransfer: (fileSourceId) =>
+    set((state) => ({
+      FileTransfers: state.FileTransfers.filter((f) => f.sourceId !== fileSourceId),
+    })),
 }));
 
 export default useFileTransfersStore;
