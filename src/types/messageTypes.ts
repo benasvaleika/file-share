@@ -61,17 +61,26 @@ export interface FileTransDropMessageType {
   fileSourceId: string;
 }
 
-// TODO confirm SDP message type
 export interface RtcSdpOfferMessageType {
   type: MessageEnum.RTC_SDP_OFFER;
+  transferId: 'string';
   sourceId: 'string';
   destinationId: 'string';
-  sdpData: any;
+  data: any;
 }
 
 export interface RtcSdpAnswerMessageType {
   type: MessageEnum.RTC_SDP_ANSWER;
+  transferId: 'string';
   sourceId: 'string';
   destinationId: 'string';
-  sdpData: any;
+  data: any;
+}
+
+export interface RtcIceCandidateMessageType {
+  type: MessageEnum.RTC_SDP_ANSWER;
+  transferId: 'string';
+  sourceId: 'string';
+  destinationId: 'string';
+  data: any;
 }
