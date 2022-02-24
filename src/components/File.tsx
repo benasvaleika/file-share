@@ -1,5 +1,6 @@
 import React from 'react';
 import { FaRegFileAlt } from 'react-icons/fa';
+import { createConnection } from '../services/RTC/RTCservice';
 import { FileType } from '../types/messageTypes';
 import { Button } from './Button';
 
@@ -11,6 +12,10 @@ interface FileProps {
 }
 
 export const File: React.FC<FileProps> = ({ file, outgoing, onFileCancel, onFileReject }) => {
+  const transferAcceptHandler = () => {
+    createConnection();
+  };
+
   return (
     <div className="text-secondary-two ml-2 flex justify-between mt-4">
       <div className="flex items-center">
@@ -30,7 +35,7 @@ export const File: React.FC<FileProps> = ({ file, outgoing, onFileCancel, onFile
               className="mr-2 hover:bg-base"
               color="secondaryTwo"
               name="Accept"
-              onClick={() => console.log('Accept file: ' + file.name)}
+              onClick={transferAcceptHandler}
             />
             <Button
               className="hover:bg-base"
