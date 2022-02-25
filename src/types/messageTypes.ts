@@ -28,7 +28,7 @@ export interface CurrRoomUsersType {
   roomUsers: RoomUserType[];
 }
 
-export interface FileType {
+export interface FileMessageType {
   id: string;
   destinationId: string;
   sourceId: string;
@@ -41,7 +41,7 @@ export interface FileType {
 
 export interface FileTransMessageType {
   type: MessageEnum.FILE_TRANS;
-  files: FileType[];
+  files: FileMessageType[];
 }
 
 export interface FileTransCancelMessageType {
@@ -83,4 +83,16 @@ export interface RtcIceCandidateMessageType {
   sourceId: 'string';
   destinationId: 'string';
   data: any;
+}
+
+export interface FileTransferType {
+  id: string;
+  destinationId: string;
+  sourceId: string;
+  name: string;
+  size: number;
+  type: string;
+  lastModified: number;
+  outgoing: boolean;
+  RTCconfig: RTCPeerConnection;
 }

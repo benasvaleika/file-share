@@ -1,11 +1,11 @@
 import React from 'react';
 import { FaRegFileAlt } from 'react-icons/fa';
 import { createConnection } from '../services/RTC/RTCservice';
-import { FileType } from '../types/messageTypes';
+import { FileTransferType } from '../types/messageTypes';
 import { Button } from './Button';
 
 interface FileProps {
-  file: FileType;
+  file: FileTransferType;
   outgoing: boolean;
   onFileCancel: (fileId: string, fileDestinationId: string) => void;
   onFileReject: (fileId: string, fileSourceId: string) => void;

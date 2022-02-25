@@ -12,6 +12,7 @@ import {
   FileTransMessageType,
   InitialMessageType,
 } from '../../types/messageTypes';
+import { extendFileTransMessage } from '../../utils/filesUtils';
 
 const userId = useUserIdStore.getState();
 const userLetter = useUserLetterStore.getState();
@@ -36,8 +37,8 @@ export const currRoomUsersHandler = (message: CurrRoomUsersType): void => {
 
 export const fileTransMessageHandler = (message: FileTransMessageType): void => {
   message.files.forEach((f) => {
-    f.outgoing = false;
-    fileTransfers.addFileTransfer(f);
+    const fileTransfer = extendFileTransMessage(f);
+    fileTransfers.addFileTransfer(fileTransfer);
   });
 };
 

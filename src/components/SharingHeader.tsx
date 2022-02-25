@@ -4,7 +4,7 @@ import useCurrRoomUsersStore from '../stores/useCurrRoomUsersStore';
 import useFileStore from '../stores/useFileTransfersStore';
 import useUserIdStore from '../stores/useUserIdStore';
 import useUserLetterStore from '../stores/useUserLetter';
-import { parseInputFiles } from '../utils/filesUtils';
+import { createFileTransMessageObj, createFileTransObject } from '../utils/filesUtils';
 import { MessageEnum } from '../types/mesageEnum';
 import { FileTransMessageType } from '../types/messageTypes';
 import { Line } from './Line';
@@ -22,10 +22,11 @@ export const SharingHeader: React.FC<SharingHeaderProps> = () => {
 
   const fileUploadHandler = (e: React.ChangeEvent<HTMLInputElement>, userId: string) => {
     e.preventDefault();
-    const parsedFiles = parseInputFiles(e, userId);
+    const parsedFiles = createFileTransObject(e, userId);
+    const parsedFilesMessage = createFileTransMessageObj(e, userId);
     wsSendMessageHandler({
       type: MessageEnum.FILE_TRANS,
-      files: parsedFiles,
+      files: parsedFilesMessage,
     } as FileTransMessageType);
     parsedFiles.forEach((f) => addFileTransfer(f));
   };
