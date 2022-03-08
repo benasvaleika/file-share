@@ -60,6 +60,8 @@ export const fileTransDropMessageHandler = (message: FileTransDropMessageType): 
 
 export const rtcSdpOfferMessageHandler = async (message: RtcSdpOfferMessageType) => {
   const fileTransfers = useFileTransfersStore.getState();
+  console.log(fileTransfers);
+  console.log(message.transferId);
   const destFileTransfer = fileTransfers.FileTransfers.filter((f) => f.id === message.transferId);
   destFileTransfer[0].RTCconfig.setRemoteDescription(message.data);
 
@@ -67,8 +69,6 @@ export const rtcSdpOfferMessageHandler = async (message: RtcSdpOfferMessageType)
   destFileTransfer[0].RTCconfig.setLocalDescription(await RTCAnswer);
 
   console.log(fileTransfers.FileTransfers);
-
-  console.log('got offer');
 
   wsSendMessageHandler({
     type: MessageEnum.RTC_SDP_ANSWER,
@@ -81,5 +81,9 @@ export const rtcSdpOfferMessageHandler = async (message: RtcSdpOfferMessageType)
 
 export const rtcSdpAnswerMessageHandler = async (message: RtcSdpAnswerMessageType) => {
   const fileTransfers = useFileTransfersStore.getState();
-  console.log('answer');
+  const destFileTransfer = fileTransfers.FileTransfers.filter((f) => f.id === message.transferId);
+
+  destFileTransfer[0].RTCconfig.setRemoteDescription(message.data);
+
+  console.log(fileTransfers);
 };

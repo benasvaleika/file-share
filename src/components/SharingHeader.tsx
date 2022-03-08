@@ -23,7 +23,7 @@ export const SharingHeader: React.FC<SharingHeaderProps> = () => {
   const fileUploadHandler = (e: React.ChangeEvent<HTMLInputElement>, userId: string) => {
     e.preventDefault();
     const parsedFiles = createFileTransObject(e, userId);
-    const parsedFilesMessage = createFileTransMessageObj(e, userId);
+    const parsedFilesMessage = createFileTransMessageObj(e, userId, parsedFiles);
     wsSendMessageHandler({
       type: MessageEnum.FILE_TRANS,
       files: parsedFilesMessage,

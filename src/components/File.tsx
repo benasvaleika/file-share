@@ -20,8 +20,8 @@ export const File: React.FC<FileProps> = ({ file, outgoing, onFileCancel, onFile
     const RTCOfferMessage = {
       type: MessageEnum.RTC_SDP_OFFER,
       transferId: file.id,
-      destinationId: file.destinationId,
-      sourceId: file.sourceId,
+      destinationId: file.sourceId,
+      sourceId: file.destinationId,
       data: await RTCOffer,
     } as RtcSdpOfferMessageType;
 

@@ -24,20 +24,21 @@ export const createFileTransObject = (e: React.ChangeEvent<HTMLInputElement>, us
 
 export const createFileTransMessageObj = (
   e: React.ChangeEvent<HTMLInputElement>,
-  userId: string
+  userId: string,
+  fileTransObj: FileTransferType[]
 ) => {
   const parsedFiles: FileMessageType[] = [];
   if (e.target.files) {
     for (let i = 0; i < e.target.files.length; i++) {
       parsedFiles.push({
-        id: uuidv4(),
-        destinationId: userId,
-        sourceId: useUserIdStore.getState().userId,
-        name: e.target.files[i].name,
-        size: e.target.files[i].size,
-        type: e.target.files[i].type,
-        lastModified: e.target.files[i].lastModified,
-        outgoing: true,
+        id: fileTransObj[i].id,
+        destinationId: fileTransObj[i].destinationId,
+        sourceId: fileTransObj[i].sourceId,
+        name: fileTransObj[i].name,
+        size: fileTransObj[i].size,
+        type: fileTransObj[i].type,
+        lastModified: fileTransObj[i].lastModified,
+        outgoing: fileTransObj[i].outgoing,
       } as FileMessageType);
     }
   }
