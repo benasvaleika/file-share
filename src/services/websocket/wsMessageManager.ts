@@ -7,6 +7,8 @@ import {
   fileTransMessageHandler,
   fileTransRejectMessageHandler,
   initialMessageHandler,
+  rtcSdpAnswerMessageHandler,
+  rtcSdpOfferMessageHandler,
 } from './wsMessageHandlers';
 
 export const wsMessageManager = (event: MessageEvent) => {
@@ -34,6 +36,13 @@ export const wsMessageManager = (event: MessageEvent) => {
     case MessageEnum.FILE_TRANS_DROP:
       fileTransDropMessageHandler(parsedMsg);
       break;
+    case MessageEnum.RTC_SDP_OFFER:
+      rtcSdpOfferMessageHandler(parsedMsg);
+      break;
+    case MessageEnum.RTC_SDP_ANSWER:
+      rtcSdpAnswerMessageHandler(parsedMsg);
+      break;
+
     default:
       // Add default handling
       console.log('ws manager default reached');
