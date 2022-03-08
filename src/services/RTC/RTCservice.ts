@@ -35,8 +35,4 @@ export const createConnection = async () => {
   const rtcAnswer = remoteConnection.createAnswer();
   remoteConnection.setLocalDescription(await rtcAnswer);
   localConnection.setRemoteDescription(await rtcAnswer);
-
-  console.log(sendChannel);
-  console.log(localConnection);
-  console.log(remoteConnection);
 };
