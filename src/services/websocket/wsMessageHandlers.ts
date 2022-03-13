@@ -12,6 +12,7 @@ import {
   FileTransDropMessageType,
   FileTransMessageType,
   InitialMessageType,
+  RtcIceCandidateMessageType,
   RtcSdpAnswerMessageType,
   RtcSdpOfferMessageType,
 } from '../../types/messageTypes';
@@ -60,8 +61,6 @@ export const fileTransDropMessageHandler = (message: FileTransDropMessageType): 
 
 export const rtcSdpOfferMessageHandler = async (message: RtcSdpOfferMessageType) => {
   const fileTransfers = useFileTransfersStore.getState();
-  console.log(fileTransfers);
-  console.log(message.transferId);
   const destFileTransfer = fileTransfers.FileTransfers.filter((f) => f.id === message.transferId);
   destFileTransfer[0].RTCconfig.setRemoteDescription(message.data);
 
@@ -77,6 +76,18 @@ export const rtcSdpOfferMessageHandler = async (message: RtcSdpOfferMessageType)
     sourceId: message.destinationId,
     data: await RTCAnswer,
   } as RtcSdpAnswerMessageType);
+
+  destFileTransfer[0].RTCconfig.addEventListener('icecandidate', (event) => {
+    if (event.candidate) {
+      wsSendMessageHandler({
+        type: MessageEnum.RTC_ICE_CANDIDATE,
+        transferId: message.transferId,
+        destinationId: message.sourceId,
+        sourceId: message.destinationId,
+        data: event.candidate,
+      } as RtcIceCandidateMessageType);
+    }
+  });
 };
 
 export const rtcSdpAnswerMessageHandler = async (message: RtcSdpAnswerMessageType) => {
@@ -85,5 +96,24 @@ export const rtcSdpAnswerMessageHandler = async (message: RtcSdpAnswerMessageTyp
 
   destFileTransfer[0].RTCconfig.setRemoteDescription(message.data);
 
+  destFileTransfer[0].RTCconfig.addEventListener('icecandidate', (event) => {
+    if (event.candidate) {
+      wsSendMessageHandler({
+        type: MessageEnum.RTC_ICE_CANDIDATE,
+        transferId: message.transferId,
+        destinationId: message.destinationId,
+        sourceId: message.sourceId,
+        data: event.candidate,
+      } as RtcIceCandidateMessageType);
+    }
+  });
+
   console.log(fileTransfers);
+};
+
+export const RtcIceCandidateMessageHandler = async (message: RtcIceCandidateMessageType) => {
+  const fileTransfers = useFileTransfersStore.getState();
+  const destFileTransfer = fileTransfers.FileTransfers.filter((f) => f.id === message.transferId);
+
+  await destFileTransfer[0].RTCconfig.addIceCandidate(message.data);
 };

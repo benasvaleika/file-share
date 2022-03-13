@@ -7,6 +7,7 @@ import {
   fileTransMessageHandler,
   fileTransRejectMessageHandler,
   initialMessageHandler,
+  RtcIceCandidateMessageHandler,
   rtcSdpAnswerMessageHandler,
   rtcSdpOfferMessageHandler,
 } from './wsMessageHandlers';
@@ -41,6 +42,9 @@ export const wsMessageManager = (event: MessageEvent) => {
       break;
     case MessageEnum.RTC_SDP_ANSWER:
       rtcSdpAnswerMessageHandler(parsedMsg);
+      break;
+    case MessageEnum.RTC_ICE_CANDIDATE:
+      RtcIceCandidateMessageHandler(parsedMsg);
       break;
 
     default:

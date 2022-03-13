@@ -1,5 +1,6 @@
 import React from 'react';
 import { FaRegFileAlt } from 'react-icons/fa';
+import { createConnection } from '../services/RTC/RTCservice';
 import wsSendMessageHandler from '../services/websocket/wsSendMessageManager';
 import { MessageEnum } from '../types/mesageEnum';
 import { FileTransferType, RtcSdpOfferMessageType } from '../types/messageTypes';
@@ -14,6 +15,9 @@ interface FileProps {
 
 export const File: React.FC<FileProps> = ({ file, outgoing, onFileCancel, onFileReject }) => {
   const transferAcceptHandler = async () => {
+    const sendChannel = file.RTCconfig.createDataChannel('sendDataChannel');
+    sendChannel.binaryType = 'arraybuffer';
+
     const RTCOffer = file.RTCconfig.createOffer();
     file.RTCconfig.setLocalDescription(await RTCOffer);
 

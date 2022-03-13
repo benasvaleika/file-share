@@ -1,14 +1,6 @@
-export const createConnection = async () => {
-  const iceServers = [
-    {
-      urls: [
-        'stun:stun.l.google.com:19302',
-        'stun:stun1.l.google.com:19302',
-        'stun:stun2.l.google.com:19302',
-      ],
-    },
-  ];
+import { iceServers } from '../../utils/constants';
 
+export const createConnection = async () => {
   const localConnection = new RTCPeerConnection({ iceServers });
   const remoteConnection = new RTCPeerConnection({ iceServers });
   const sendChannel = localConnection.createDataChannel('sendDataChannel');
