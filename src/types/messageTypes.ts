@@ -78,7 +78,7 @@ export interface RtcSdpAnswerMessageType {
 }
 
 export interface RtcIceCandidateMessageType {
-  type: MessageEnum.RTC_SDP_ANSWER;
+  type: MessageEnum.RTC_ICE_CANDIDATE;
   transferId: 'string';
   sourceId: 'string';
   destinationId: 'string';

@@ -9,4 +9,5 @@ export enum MessageEnum {
   FILE_TRANS_DROP = 'filetransdrop',
   RTC_SDP_OFFER = 'rtcsdpoffer',
   RTC_SDP_ANSWER = 'rtcsdpanswer',
+  RTC_ICE_CANDIDATE = 'rtcicecandidate',
 }
