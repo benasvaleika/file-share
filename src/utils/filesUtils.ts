@@ -1,6 +1,7 @@
 import { FileMessageType, FileTransferType } from '../types/messageTypes';
 import { v4 as uuidv4 } from 'uuid';
 import useUserIdStore from '../stores/useUserIdStore';
+import { iceServers } from './constants';
 
 export const createFileTransObject = (e: React.ChangeEvent<HTMLInputElement>, userId: string) => {
   const parsedFiles: FileTransferType[] = [];
@@ -15,7 +16,7 @@ export const createFileTransObject = (e: React.ChangeEvent<HTMLInputElement>, us
         type: e.target.files[i].type,
         lastModified: e.target.files[i].lastModified,
         outgoing: true,
-        RTCconfig: new RTCPeerConnection(),
+        RTCconfig: new RTCPeerConnection({ iceServers }),
       } as FileTransferType);
     }
   }
@@ -55,7 +56,7 @@ export const extendFileTransMessage = (msgObj: FileMessageType) => {
     type: msgObj.type,
     lastModified: msgObj.lastModified,
     outgoing: false,
-    RTCconfig: new RTCPeerConnection(),
+    RTCconfig: new RTCPeerConnection({ iceServers }),
   };
   return fileTransfer;
 };

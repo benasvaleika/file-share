@@ -1,10 +1,14 @@
-import { config as dotenv } from 'dotenv';
+// import { config as dotenv } from 'dotenv';
 
-dotenv();
+// Using environment variables with react-scritps causes
+// Uncaught ReferenceError: process is not defined error.
+// TODO fix the error mentioned above
 
-export const WS_URL = process.env.WS_URL;
+// dotenv();
 
-export const ICE_SERVERS = [
+// export const WS_URL = process.env.WS_URL;
+
+export const iceServers = [
   {
     urls: [
       'stun:stun.l.google.com:19302',
