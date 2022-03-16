@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react';
 import { FaRegFileAlt } from 'react-icons/fa';
 import { createConnection } from '../services/RTC/RTCservice';
+import { receiveChannelCallback, sendMessage } from '../services/RTC/RTCutils';
 import wsSendMessageHandler from '../services/websocket/wsSendMessageManager';
 import { MessageEnum } from '../types/mesageEnum';
 import { FileTransferType, RtcSdpOfferMessageType } from '../types/messageTypes';
@@ -14,9 +15,6 @@ interface FileProps {
 }
 
 export const File: React.FC<FileProps> = ({ file, outgoing, onFileCancel, onFileReject }) => {
-  // let sendChannel: any;
-  let receiveChannel: any;
-
   // Create Data channel
   const sendChannel = file.RTCconfig.createDataChannel('sendDataChannel');
   sendChannel.binaryType = 'arraybuffer';
@@ -42,34 +40,11 @@ export const File: React.FC<FileProps> = ({ file, outgoing, onFileCancel, onFile
     wsSendMessageHandler(RTCOfferMessage);
   };
 
-  function receiveChannelCallback(event: RTCDataChannelEvent) {
-    receiveChannel = event.channel;
-    receiveChannel.onmessage = handleReceiveMessage;
-    receiveChannel.onopen = handleReceiveChannelStatusChange;
-    receiveChannel.onclose = handleReceiveChannelStatusChange;
-  }
-
-  function handleReceiveMessage(event: MessageEvent<any>) {
-    console.log('Message received');
-    console.log(event);
-  }
-
-  function handleReceiveChannelStatusChange(event: any) {
-    if (receiveChannel) {
-      console.log("Receive channel's status has changed to " + receiveChannel.readyState);
-    }
-  }
-
-  function sendMessage() {
-    const message = 'this is a message';
-    sendChannel.send(message);
-  }
-
   // Send data for testing
   if (file.outgoing) {
     setTimeout(function () {
       if (sendChannel.readyState === 'open') {
-        sendChannel.send('Data sent from sender');
+        sendMessage(sendChannel);
         console.log('Some data sent');
       } else {
         console.log('Tried to send a message');
