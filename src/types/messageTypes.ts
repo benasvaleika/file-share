@@ -1,4 +1,4 @@
-import { MessageEnum } from './mesageEnum';
+import { MessageEnum, TransferStatus } from './mesageEnum';
 
 export interface InitialMessageType {
   type: MessageEnum.INITIAL;
@@ -61,6 +61,13 @@ export interface FileTransDropMessageType {
   fileSourceId: string;
 }
 
+export interface FileTransAcceptMessageType {
+  type: MessageEnum.FILE_TRANS_ACCEPT;
+  transferId: 'string';
+  sourceId: 'string';
+  destinationId: 'string';
+}
+
 export interface RtcSdpOfferMessageType {
   type: MessageEnum.RTC_SDP_OFFER;
   transferId: 'string';
@@ -95,4 +102,5 @@ export interface FileTransferType {
   lastModified: number;
   outgoing: boolean;
   RTCconfig: RTCPeerConnection;
+  transferStatus: TransferStatus;
 }

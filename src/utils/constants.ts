@@ -8,6 +8,11 @@
 
 // export const WS_URL = process.env.WS_URL;
 
+// Transfer Accept message retry configuration
+export const ACCEPT_MSG_MAX_RETRIES = 20;
+export const ACCEPT_MSG_RETRY_INTERVAL = 50;
+
+// Used for RTC Ice candidate gathering
 export const iceServers = [
   {
     urls: [
