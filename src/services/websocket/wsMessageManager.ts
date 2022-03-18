@@ -2,6 +2,7 @@ import { MessageEnum } from '../../types/mesageEnum';
 import {
   chatMessageHandler,
   currRoomUsersHandler,
+  fileTransAcceptMessageHandler,
   fileTransCancelMessageHandler,
   fileTransDropMessageHandler,
   fileTransMessageHandler,
@@ -36,6 +37,9 @@ export const wsMessageManager = (event: MessageEvent) => {
       break;
     case MessageEnum.FILE_TRANS_DROP:
       fileTransDropMessageHandler(parsedMsg);
+      break;
+    case MessageEnum.FILE_TRANS_ACCEPT:
+      fileTransAcceptMessageHandler(parsedMsg);
       break;
     case MessageEnum.RTC_SDP_OFFER:
       rtcSdpOfferMessageHandler(parsedMsg);

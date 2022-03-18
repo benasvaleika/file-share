@@ -10,6 +10,7 @@ import {
   CurrRoomUsersType,
   FileTransCancelMessageType,
   FileTransDropMessageType,
+  FileTransAcceptMessageType,
   FileTransMessageType,
   InitialMessageType,
   RtcIceCandidateMessageType,
@@ -57,6 +58,11 @@ export const fileTransRejectMessageHandler = (message: FileTransCancelMessageTyp
 
 export const fileTransDropMessageHandler = (message: FileTransDropMessageType): void => {
   fileTransfers.dropFileTransfer(message.fileSourceId);
+};
+
+export const fileTransAcceptMessageHandler = (message: FileTransAcceptMessageType): void => {
+  console.log('Transfer Accept Message arrived: ');
+  console.log(message);
 };
 
 export const rtcSdpOfferMessageHandler = async (message: RtcSdpOfferMessageType) => {

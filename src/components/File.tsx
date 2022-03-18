@@ -1,10 +1,11 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { FaRegFileAlt } from 'react-icons/fa';
-import { createConnection } from '../services/RTC/RTCservice';
-import { receiveChannelCallback, sendMessage } from '../services/RTC/RTCutils';
+import { receiveChannelCallback } from '../services/RTC/RTCutils';
 import wsSendMessageHandler from '../services/websocket/wsSendMessageManager';
 import { MessageEnum } from '../types/mesageEnum';
 import { FileTransferType, RtcSdpOfferMessageType } from '../types/messageTypes';
+import { ACCEPT_MSG_RETRY_INTERVAL } from '../utils/constants';
+import { generateTransferAcceptMessage } from '../utils/filesUtils';
 import { Button } from './Button';
 
 interface FileProps {
@@ -37,20 +38,22 @@ export const File: React.FC<FileProps> = ({ file, outgoing, onFileCancel, onFile
       data: await RTCOffer,
     } as RtcSdpOfferMessageType;
 
+    // Set Initial offer
     wsSendMessageHandler(RTCOfferMessage);
+
+    // Send Transfer Accept message
+    sendTransferAcceptMessage();
   };
 
-  // Send data for testing
-  if (file.outgoing) {
-    setTimeout(function () {
-      if (sendChannel.readyState === 'open') {
-        sendMessage(sendChannel);
-        console.log('Some data sent');
-      } else {
-        console.log('Tried to send a message');
-        console.log(sendChannel);
-      }
-    }, 10000);
+  function sendTransferAcceptMessage() {
+    if (file.RTCconfig.connectionState !== 'connected') {
+      console.log('retrying');
+      console.log(file.RTCconfig.connectionState);
+      setTimeout(sendTransferAcceptMessage, ACCEPT_MSG_RETRY_INTERVAL);
+    } else {
+      wsSendMessageHandler(generateTransferAcceptMessage(file));
+      console.log('accept message sent to the server', file.id);
+    }
   }
 
   return (

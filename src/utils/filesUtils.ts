@@ -1,7 +1,14 @@
-import { FileMessageType, FileTransferType } from '../types/messageTypes';
+import {
+  FileMessageType,
+  FileTransAcceptMessageType,
+  FileTransferType,
+  RtcSdpOfferMessageType,
+} from '../types/messageTypes';
 import { v4 as uuidv4 } from 'uuid';
 import useUserIdStore from '../stores/useUserIdStore';
 import { iceServers } from './constants';
+import { MessageEnum, TransferStatus } from '../types/mesageEnum';
+import { resolve } from 'path';
 
 export const createFileTransObject = (e: React.ChangeEvent<HTMLInputElement>, userId: string) => {
   const parsedFiles: FileTransferType[] = [];
@@ -17,6 +24,7 @@ export const createFileTransObject = (e: React.ChangeEvent<HTMLInputElement>, us
         lastModified: e.target.files[i].lastModified,
         outgoing: true,
         RTCconfig: new RTCPeerConnection({ iceServers }),
+        transferStatus: TransferStatus.PENDING,
       } as FileTransferType);
     }
   }
@@ -57,6 +65,16 @@ export const extendFileTransMessage = (msgObj: FileMessageType) => {
     lastModified: msgObj.lastModified,
     outgoing: false,
     RTCconfig: new RTCPeerConnection({ iceServers }),
+    transferStatus: TransferStatus.PENDING,
   };
   return fileTransfer;
+};
+
+export const generateTransferAcceptMessage = (file: FileTransferType) => {
+  return {
+    type: MessageEnum.FILE_TRANS_ACCEPT,
+    transferId: file.id,
+    sourceId: file.destinationId,
+    destinationId: file.sourceId,
+  } as FileTransAcceptMessageType;
 };
