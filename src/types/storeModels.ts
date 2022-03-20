@@ -1,3 +1,4 @@
+import { TransferStatusEnum } from './mesageEnum';
 import { ChatMessageType, FileMessageType, FileTransferType, RoomUserType } from './messageTypes';
 
 export interface RoomIdStoreModel {
@@ -41,4 +42,5 @@ export interface FileTransStoreModel {
   addFileTransfer: (newFile: FileTransferType) => void;
   removeFileTransfer: (fileId: string) => void;
   dropFileTransfer: (fileSourceId: string) => void;
+  changeTransferStatus: (transferId: string, newStatus: TransferStatusEnum) => void;
 }

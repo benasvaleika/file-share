@@ -4,7 +4,7 @@ import useFileTransfersStore from '../../stores/useFileTransfersStore';
 import useRoomIdSuggestedStore from '../../stores/useRoomIdSuggestedStore';
 import useUserIdStore from '../../stores/useUserIdStore';
 import useUserLetterStore from '../../stores/useUserLetter';
-import { MessageEnum } from '../../types/mesageEnum';
+import { MessageEnum, TransferStatusEnum } from '../../types/mesageEnum';
 import {
   ChatMessageType,
   CurrRoomUsersType,
@@ -61,8 +61,9 @@ export const fileTransDropMessageHandler = (message: FileTransDropMessageType): 
 };
 
 export const fileTransAcceptMessageHandler = (message: FileTransAcceptMessageType): void => {
-  console.log('Transfer Accept Message arrived: ');
-  console.log(message);
+  const fileTransfers = useFileTransfersStore.getState();
+  const destFileTransfer = fileTransfers.FileTransfers.filter((f) => f.id === message.transferId);
+  fileTransfers.changeTransferStatus(message.transferId, TransferStatusEnum.IN_PROGRESS);
 };
 
 export const rtcSdpOfferMessageHandler = async (message: RtcSdpOfferMessageType) => {

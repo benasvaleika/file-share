@@ -11,6 +11,19 @@ const useFileTransfersStore = create<FileTransStoreModel>((set) => ({
     set((state) => ({
       FileTransfers: state.FileTransfers.filter((f) => f.sourceId !== fileSourceId),
     })),
+  changeTransferStatus: (transferId, newStatus) =>
+    set((state) => ({
+      FileTransfers: state.FileTransfers.map((trans) => {
+        if (trans.id === transferId) {
+          return {
+            ...trans,
+            transferStatus: newStatus,
+          };
+        } else {
+          return trans;
+        }
+      }),
+    })),
 }));
 
 export default useFileTransfersStore;

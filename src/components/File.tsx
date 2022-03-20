@@ -1,8 +1,8 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { FaRegFileAlt } from 'react-icons/fa';
 import { receiveChannelCallback } from '../services/RTC/RTCutils';
 import wsSendMessageHandler from '../services/websocket/wsSendMessageManager';
-import { MessageEnum } from '../types/mesageEnum';
+import { MessageEnum, TransferStatusEnum } from '../types/mesageEnum';
 import { FileTransferType, RtcSdpOfferMessageType } from '../types/messageTypes';
 import { ACCEPT_MSG_RETRY_INTERVAL } from '../utils/constants';
 import { generateTransferAcceptMessage } from '../utils/filesUtils';
@@ -44,6 +44,25 @@ export const File: React.FC<FileProps> = ({ file, outgoing, onFileCancel, onFile
     // Send Transfer Accept message
     sendTransferAcceptMessage();
   };
+
+  // Triggered by transfer accept handler
+  useEffect(() => {
+    if (file.transferStatus === TransferStatusEnum.IN_PROGRESS) {
+      console.log('Pending Status triggered');
+      console.log(file.name, file.transferStatus);
+      sendTransferData();
+    }
+  }, [file]);
+
+  function sendTransferData() {
+    if (sendChannel.readyState !== 'open') {
+      console.log('retrying');
+      console.log(file.RTCconfig.connectionState);
+      setTimeout(sendTransferData, ACCEPT_MSG_RETRY_INTERVAL);
+    } else {
+      sendChannel.send(file.name);
+    }
+  }
 
   function sendTransferAcceptMessage() {
     if (file.RTCconfig.connectionState !== 'connected') {
