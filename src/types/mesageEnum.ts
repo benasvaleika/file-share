@@ -13,7 +13,7 @@ export enum MessageEnum {
   RTC_ICE_CANDIDATE = 'rtcicecandidate',
 }
 
-export enum TransferStatus {
+export enum TransferStatusEnum {
   PENDING = 'pending',
   IN_PROGRESS = 'inprogress',
 }

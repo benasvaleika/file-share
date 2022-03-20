@@ -7,8 +7,7 @@ import {
 import { v4 as uuidv4 } from 'uuid';
 import useUserIdStore from '../stores/useUserIdStore';
 import { iceServers } from './constants';
-import { MessageEnum, TransferStatus } from '../types/mesageEnum';
-import { resolve } from 'path';
+import { MessageEnum, TransferStatusEnum } from '../types/mesageEnum';
 
 export const createFileTransObject = (e: React.ChangeEvent<HTMLInputElement>, userId: string) => {
   const parsedFiles: FileTransferType[] = [];
@@ -24,7 +23,7 @@ export const createFileTransObject = (e: React.ChangeEvent<HTMLInputElement>, us
         lastModified: e.target.files[i].lastModified,
         outgoing: true,
         RTCconfig: new RTCPeerConnection({ iceServers }),
-        transferStatus: TransferStatus.PENDING,
+        transferStatus: TransferStatusEnum.PENDING,
       } as FileTransferType);
     }
   }
@@ -65,7 +64,7 @@ export const extendFileTransMessage = (msgObj: FileMessageType) => {
     lastModified: msgObj.lastModified,
     outgoing: false,
     RTCconfig: new RTCPeerConnection({ iceServers }),
-    transferStatus: TransferStatus.PENDING,
+    transferStatus: TransferStatusEnum.PENDING,
   };
   return fileTransfer;
 };

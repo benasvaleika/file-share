@@ -1,4 +1,4 @@
-import { MessageEnum, TransferStatus } from './mesageEnum';
+import { MessageEnum, TransferStatusEnum } from './mesageEnum';
 
 export interface InitialMessageType {
   type: MessageEnum.INITIAL;
@@ -102,5 +102,5 @@ export interface FileTransferType {
   lastModified: number;
   outgoing: boolean;
   RTCconfig: RTCPeerConnection;
-  transferStatus: TransferStatus;
+  transferStatus: TransferStatusEnum;
 }
