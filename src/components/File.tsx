@@ -1,6 +1,5 @@
 import React, { useEffect } from 'react';
 import { FaRegFileAlt } from 'react-icons/fa';
-import { receiveChannelCallback } from '../services/RTC/RTCutils';
 import wsSendMessageHandler from '../services/websocket/wsSendMessageManager';
 import { MessageEnum, TransferStatusEnum } from '../types/mesageEnum';
 import { FileTransferType, RtcSdpOfferMessageType } from '../types/messageTypes';
@@ -16,9 +15,15 @@ interface FileProps {
 }
 
 export const File: React.FC<FileProps> = ({ file, outgoing, onFileCancel, onFileReject }) => {
+  // Initialization
+  let receiveBuffer: any = [];
+  let receivedSize = 0;
+
   // Create Data channel
   const sendChannel = file.RTCconfig.createDataChannel('sendDataChannel');
   sendChannel.binaryType = 'arraybuffer';
+
+  let receiveChannel: any;
 
   const transferAcceptHandler = async () => {
     if (!file.outgoing) {
@@ -60,7 +65,70 @@ export const File: React.FC<FileProps> = ({ file, outgoing, onFileCancel, onFile
       console.log(file.RTCconfig.connectionState);
       setTimeout(sendTransferData, ACCEPT_MSG_RETRY_INTERVAL);
     } else {
-      sendChannel.send(file.name);
+      const chunkSize = 16384;
+      const fileReader = new FileReader();
+      let offset = 0;
+      fileReader.addEventListener('error', (error) => console.error('Error reading file:', error));
+      fileReader.addEventListener('abort', (event) => console.log('File reading aborted:', event));
+      fileReader.addEventListener('load', (e) => {
+        if (e.target?.result) {
+          console.log('FileRead.onload ', e);
+          sendChannel.send(e.target.result as ArrayBuffer);
+          // console.log(e.target.result)
+          offset += chunkSize;
+          // sendProgress.value = offset;
+          if (offset < file.size) {
+            readSlice(offset);
+            // }
+          }
+        }
+      });
+      const readSlice = (o: any) => {
+        if (file.file) {
+          console.log('readSlice ', o);
+          const slice = file.file.slice(offset, o + chunkSize);
+          fileReader.readAsArrayBuffer(slice);
+        }
+      };
+      readSlice(0);
+    }
+  }
+
+  function receiveChannelCallback(event: RTCDataChannelEvent) {
+    receiveChannel = event.channel;
+    receiveChannel.onmessage = handleReceiveMessage;
+    receiveChannel.onopen = handleReceiveChannelStatusChange(event);
+    receiveChannel.onclose = handleReceiveChannelStatusChange(event);
+  }
+
+  function handleReceiveMessage(event: MessageEvent<any>) {
+    console.log('Message received');
+    console.log(event);
+    receiveBuffer.push(event.data);
+    receivedSize += event.data.byteLength;
+
+    if (receivedSize === file.size) {
+      console.log('Transfer complete');
+      const received = new Blob(receiveBuffer);
+      receiveBuffer = [];
+
+      const url = URL.createObjectURL(received);
+      console.log(url);
+      const link = document.createElement('a');
+      link.href = url;
+      link.setAttribute('download', file.name);
+
+      document.body.appendChild(link);
+
+      link.click();
+
+      link.parentNode?.removeChild(link);
+    }
+  }
+
+  function handleReceiveChannelStatusChange(event: any) {
+    if (receiveChannel) {
+      // console.log("Receive channel's status has changed to " + receiveChannel.readyState);
     }
   }
 

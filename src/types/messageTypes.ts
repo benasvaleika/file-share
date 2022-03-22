@@ -101,6 +101,7 @@ export interface FileTransferType {
   type: string;
   lastModified: number;
   outgoing: boolean;
+  file: File | null;
   RTCconfig: RTCPeerConnection;
   transferStatus: TransferStatusEnum;
 }
