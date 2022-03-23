@@ -103,6 +103,6 @@ export interface FileTransferType {
   outgoing: boolean;
   file: File | null;
   RTCconfig: RTCPeerConnection;
-  RTCconnected: boolean;
   transferStatus: TransferStatusEnum;
+  progress: number;
 }
