@@ -61,8 +61,6 @@ export const fileTransDropMessageHandler = (message: FileTransDropMessageType): 
 };
 
 export const fileTransAcceptMessageHandler = (message: FileTransAcceptMessageType): void => {
-  const fileTransfers = useFileTransfersStore.getState();
-  const destFileTransfer = fileTransfers.FileTransfers.filter((f) => f.id === message.transferId);
   fileTransfers.changeTransferStatus(message.transferId, TransferStatusEnum.IN_PROGRESS);
 };
 
