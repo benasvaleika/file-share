@@ -24,6 +24,19 @@ const useFileTransfersStore = create<FileTransStoreModel>((set) => ({
         }
       }),
     })),
+  setProgress: (transferId, progress) =>
+    set((state) => ({
+      FileTransfers: state.FileTransfers.map((trans) => {
+        if (trans.id === transferId) {
+          return {
+            ...trans,
+            progress: progress,
+          };
+        } else {
+          return trans;
+        }
+      }),
+    })),
 }));
 
 export default useFileTransfersStore;
