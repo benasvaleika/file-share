@@ -24,6 +24,7 @@ export const createFileTransObject = (e: React.ChangeEvent<HTMLInputElement>, us
         outgoing: true,
         file: e.target.files[i],
         RTCconfig: new RTCPeerConnection({ iceServers }),
+        RTCconnected: false,
         transferStatus: TransferStatusEnum.PENDING,
       } as FileTransferType);
     }
@@ -67,6 +68,7 @@ export const extendFileTransMessage = (msgObj: FileMessageType) => {
     file: null,
     outgoing: false,
     RTCconfig: new RTCPeerConnection({ iceServers }),
+    RTCconnected: false,
     transferStatus: TransferStatusEnum.PENDING,
   };
   return fileTransfer;
