@@ -1,5 +1,5 @@
 import useFileTransfersStore from '../../stores/useFileTransfersStore';
-import { MessageEnum } from '../../types/mesageEnum';
+import { MessageEnum, TransferStatusEnum } from '../../types/mesageEnum';
 import { FileTransferType, RtcSdpOfferMessageType } from '../../types/messageTypes';
 import { ACCEPT_MSG_RETRY_INTERVAL } from '../../utils/constants';
 import wsSendMessageHandler from '../websocket/wsSendMessageManager';
@@ -82,6 +82,11 @@ class RTCTransferConnection {
           // console.log('FileRead.onload ', e);
           this.sendChannel.send(e.target.result as ArrayBuffer);
           this.sendOffset += chunkSize;
+          if (this.sendOffset === this.file.size) {
+            useFileTransfersStore
+              .getState()
+              .changeTransferStatus(this.file.id, TransferStatusEnum.COMPLETE);
+          }
           if (this.sendOffset < this.file.size) {
             readSlice(this.sendOffset);
           }
@@ -142,11 +147,6 @@ class RTCTransferConnection {
   // Calculates percentage of trensfer progress
   calculateTransferProgress(bytesProcessed: number) {
     return (100 / this.file.size) * bytesProcessed;
-  }
-
-  // Updates Transfer Progress in fileTransferStore
-  updateTransferProgress(newProgress: number) {
-    this.fileTransferStore.setProgress(this.file.id, newProgress);
   }
 }
 

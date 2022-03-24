@@ -16,4 +16,6 @@ export enum MessageEnum {
 export enum TransferStatusEnum {
   PENDING = 'pending',
   IN_PROGRESS = 'inprogress',
+  COMPLETE = 'complete',
+  ERROR = 'error',
 }
