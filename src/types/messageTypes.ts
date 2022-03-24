@@ -104,5 +104,4 @@ export interface FileTransferType {
   file: File | null;
   RTCconfig: RTCPeerConnection;
   transferStatus: TransferStatusEnum;
-  progress: number;
 }

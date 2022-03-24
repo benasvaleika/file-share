@@ -2,7 +2,6 @@ import {
   FileMessageType,
   FileTransAcceptMessageType,
   FileTransferType,
-  RtcSdpOfferMessageType,
 } from '../types/messageTypes';
 import { v4 as uuidv4 } from 'uuid';
 import useUserIdStore from '../stores/useUserIdStore';
@@ -25,7 +24,6 @@ export const createFileTransObject = (e: React.ChangeEvent<HTMLInputElement>, us
         file: e.target.files[i],
         RTCconfig: new RTCPeerConnection({ iceServers }),
         transferStatus: TransferStatusEnum.PENDING,
-        progress: 0,
       } as FileTransferType);
     }
   }
@@ -69,7 +67,6 @@ export const extendFileTransMessage = (msgObj: FileMessageType) => {
     outgoing: false,
     RTCconfig: new RTCPeerConnection({ iceServers }),
     transferStatus: TransferStatusEnum.PENDING,
-    progress: 0,
   };
   return fileTransfer;
 };

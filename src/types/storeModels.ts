@@ -43,5 +43,4 @@ export interface FileTransStoreModel {
   removeFileTransfer: (fileId: string) => void;
   dropFileTransfer: (fileSourceId: string) => void;
   changeTransferStatus: (transferId: string, newStatus: TransferStatusEnum) => void;
-  setProgress: (transferId: string, Progress: number) => void;
 }
