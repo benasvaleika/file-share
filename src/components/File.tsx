@@ -1,10 +1,11 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import { FaRegFileAlt } from 'react-icons/fa';
 import RTCTransferConnection from '../services/RTC/RTCservice';
 import { TransferStatusEnum } from '../types/mesageEnum';
 import { FileTransferType } from '../types/messageTypes';
 import { getFileTransferStatus } from '../utils/filesUtils';
 import { Button } from './Button';
+import { ProgressBar } from './ProgressBar';
 
 interface FileProps {
   file: FileTransferType;
@@ -17,11 +18,9 @@ export const File: React.FC<FileProps> = ({ file, outgoing, onFileCancel, onFile
   const [sendProgress, setSendProgress] = useState(0);
   const [receiveProgress, setReceiveProgress] = useState(0);
 
-  let RTCTransfer: any;
-
-  if (getFileTransferStatus(file.id) !== TransferStatusEnum.COMPLETE) {
-    RTCTransfer = new RTCTransferConnection(file);
-  }
+  const RTCTransfer = useMemo(() => {
+    return new RTCTransferConnection(file);
+  }, []);
 
   const transferAcceptHandler = async () => {
     RTCTransfer.createRTCConnection();
@@ -45,7 +44,6 @@ export const File: React.FC<FileProps> = ({ file, outgoing, onFileCancel, onFile
     if (newProgress < 100) {
       setSendProgress(newProgress);
       setTimeout(updateSendProgress, 50);
-      console.log(file.transferStatus);
     } else {
       setSendProgress(newProgress);
     }
@@ -56,7 +54,6 @@ export const File: React.FC<FileProps> = ({ file, outgoing, onFileCancel, onFile
     if (newProgress < 100) {
       setReceiveProgress(newProgress);
       setTimeout(updateReceiveProgress, 50);
-      console.log(file.transferStatus);
     } else {
       setReceiveProgress(newProgress);
     }
@@ -70,8 +67,9 @@ export const File: React.FC<FileProps> = ({ file, outgoing, onFileCancel, onFile
       </div>
       <div className="flex items-center mr-6">
         {outgoing ? (
+          // Outgoing tranfers
           <>
-            <div>{sendProgress}</div>
+            <ProgressBar percentage={sendProgress} />
             <Button
               className="hover:bg-base"
               name="Cancel"
@@ -79,8 +77,9 @@ export const File: React.FC<FileProps> = ({ file, outgoing, onFileCancel, onFile
             />
           </>
         ) : (
+          // Incoming transfers
           <>
-            <div>{receiveProgress}</div>
+            <ProgressBar percentage={receiveProgress} />
             <Button
               className="mr-2 hover:bg-base"
               color="secondaryTwo"
