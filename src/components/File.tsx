@@ -17,6 +17,7 @@ interface FileProps {
 export const File: React.FC<FileProps> = ({ file, outgoing, onFileCancel, onFileReject }) => {
   const [sendProgress, setSendProgress] = useState(0);
   const [receiveProgress, setReceiveProgress] = useState(0);
+  const [transferStatus, setTransferStatus] = useState(TransferStatusEnum.PENDING);
 
   const RTCTransfer = useMemo(() => {
     return new RTCTransferConnection(file);
@@ -25,6 +26,11 @@ export const File: React.FC<FileProps> = ({ file, outgoing, onFileCancel, onFile
   const transferAcceptHandler = async () => {
     RTCTransfer.createRTCConnection();
   };
+
+  const newTransferStatus = getFileTransferStatus(file.id);
+  if (newTransferStatus !== transferStatus) {
+    setTransferStatus(newTransferStatus);
+  }
 
   // Triggered by transfer accept handler
   useEffect(() => {
@@ -69,7 +75,10 @@ export const File: React.FC<FileProps> = ({ file, outgoing, onFileCancel, onFile
         {outgoing ? (
           // Outgoing tranfers
           <>
-            <ProgressBar percentage={sendProgress} />
+            {(transferStatus === TransferStatusEnum.IN_PROGRESS ||
+              transferStatus === TransferStatusEnum.COMPLETE) && (
+              <ProgressBar percentage={sendProgress} />
+            )}
             <Button
               className="hover:bg-base"
               name="Cancel"
@@ -79,7 +88,10 @@ export const File: React.FC<FileProps> = ({ file, outgoing, onFileCancel, onFile
         ) : (
           // Incoming transfers
           <>
-            <ProgressBar percentage={receiveProgress} />
+            {(transferStatus === TransferStatusEnum.IN_PROGRESS ||
+              transferStatus === TransferStatusEnum.COMPLETE) && (
+              <ProgressBar percentage={receiveProgress} />
+            )}
             <Button
               className="mr-2 hover:bg-base"
               color="secondaryTwo"
