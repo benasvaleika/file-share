@@ -3,6 +3,7 @@ import { FaRegFileAlt } from 'react-icons/fa';
 import RTCTransferConnection from '../services/RTC/RTCservice';
 import { TransferStatusEnum } from '../types/mesageEnum';
 import { FileTransferType } from '../types/messageTypes';
+import { getFileTransferStatus } from '../utils/filesUtils';
 import { Button } from './Button';
 
 interface FileProps {
@@ -16,7 +17,11 @@ export const File: React.FC<FileProps> = ({ file, outgoing, onFileCancel, onFile
   const [sendProgress, setSendProgress] = useState(0);
   const [receiveProgress, setReceiveProgress] = useState(0);
 
-  const RTCTransfer = new RTCTransferConnection(file);
+  let RTCTransfer: any;
+
+  if (getFileTransferStatus(file.id) !== TransferStatusEnum.COMPLETE) {
+    RTCTransfer = new RTCTransferConnection(file);
+  }
 
   const transferAcceptHandler = async () => {
     RTCTransfer.createRTCConnection();

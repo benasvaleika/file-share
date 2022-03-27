@@ -13,7 +13,7 @@ class RTCTransferConnection {
   receivedSize = 0;
 
   receiveChannel: any;
-  sendChannel: RTCDataChannel;
+  sendChannel: any;
 
   fileTransferStore = useFileTransfersStore.getState();
 
@@ -32,6 +32,9 @@ class RTCTransferConnection {
 
   // Getter for sent data progress
   getSendProgress() {
+    if (this.sendOffset >= this.file.size) {
+      return 100;
+    }
     return Math.round(this.calculateTransferProgress(this.sendOffset));
   }
 
@@ -41,8 +44,6 @@ class RTCTransferConnection {
 
   // Creates initial RTC connection between two peers
   async createRTCConnection() {
-    console.log('Creating RTC connection');
-
     // Create initial offer
     const RTCOffer = this.file.RTCconfig.createOffer();
     this.file.RTCconfig.setLocalDescription(await RTCOffer);
@@ -67,7 +68,6 @@ class RTCTransferConnection {
   sendTransferData() {
     console.log(this.sendChannel.readyState);
     if (this.sendChannel.readyState !== 'open') {
-      console.log('retrying');
       console.log(this.file.RTCconfig.connectionState);
       setTimeout(this.sendTransferData.bind(this), ACCEPT_MSG_RETRY_INTERVAL);
     } else {
@@ -77,21 +77,21 @@ class RTCTransferConnection {
 
       fileReader.addEventListener('error', (error) => console.error('Error reading file:', error));
       fileReader.addEventListener('abort', (event) => console.log('File reading aborted:', event));
-      fileReader.addEventListener('load', (e) => {
+      fileReader.addEventListener('load', (e: any) => {
         if (e.target?.result) {
           // console.log('FileRead.onload ', e);
           this.sendChannel.send(e.target.result as ArrayBuffer);
           this.sendOffset += chunkSize;
-          if (this.sendOffset === this.file.size) {
-            useFileTransfersStore
-              .getState()
-              .changeTransferStatus(this.file.id, TransferStatusEnum.COMPLETE);
+          if (this.sendOffset >= this.file.size) {
+            this.fileTransferStore.changeTransferStatus(this.file.id, TransferStatusEnum.COMPLETE);
+            this.disconnectPeers();
           }
           if (this.sendOffset < this.file.size) {
             readSlice(this.sendOffset);
           }
         }
       });
+
       const readSlice = (o: any) => {
         if (this.file.file) {
           const slice = this.file.file.slice(this.sendOffset, o + chunkSize);
@@ -104,7 +104,6 @@ class RTCTransferConnection {
 
   // Handles receiveChannel message/status events
   receiveChannelCallback(event: RTCDataChannelEvent) {
-    console.log('this insider callback');
     this.receiveChannel = event.channel;
     this.receiveChannel.onmessage = this.handleReceiveMessage.bind(this);
     this.receiveChannel.onopen = this.handleReceiveChannelStatusChange.bind(this);
@@ -114,7 +113,6 @@ class RTCTransferConnection {
   // Handles received message (receiveChannel)
   handleReceiveMessage(event: MessageEvent<any>) {
     console.log('Message received');
-    console.log(event);
     this.receiveBuffer.push(event.data);
     this.receivedSize += event.data.byteLength;
 
@@ -134,13 +132,16 @@ class RTCTransferConnection {
       document.body.appendChild(link);
       link.click();
       link.parentNode?.removeChild(link);
+
+      this.fileTransferStore.changeTransferStatus(this.file.id, TransferStatusEnum.COMPLETE);
+      this.disconnectPeers();
     }
   }
 
   // Handles receiveChannel status change
   handleReceiveChannelStatusChange(event: any) {
     if (this.receiveChannel) {
-      console.log("Receive channel's status has changed to " + this.receiveChannel.readyState);
+      // console.log("Receive channel's status has changed to " + this.receiveChannel.readyState);
     }
   }
 
@@ -148,9 +149,17 @@ class RTCTransferConnection {
   calculateTransferProgress(bytesProcessed: number) {
     return (100 / this.file.size) * bytesProcessed;
   }
+
+  disconnectPeers() {
+    this.sendChannel.close();
+    if (this.receiveChannel) {
+      this.receiveChannel.close();
+    }
+    this.file.RTCconfig.close();
+
+    this.sendChannel = null;
+    this.receiveChannel = null;
+  }
 }
 
 export default RTCTransferConnection;
-function changeTransferStatus(id: any, IN_PROGRESS: any) {
-  throw new Error('Function not implemented.');
-}

@@ -7,6 +7,7 @@ import { v4 as uuidv4 } from 'uuid';
 import useUserIdStore from '../stores/useUserIdStore';
 import { iceServers } from './constants';
 import { MessageEnum, TransferStatusEnum } from '../types/mesageEnum';
+import useFileTransfersStore from '../stores/useFileTransfersStore';
 
 export const createFileTransObject = (e: React.ChangeEvent<HTMLInputElement>, userId: string) => {
   const parsedFiles: FileTransferType[] = [];
@@ -78,4 +79,11 @@ export const generateTransferAcceptMessage = (file: FileTransferType) => {
     sourceId: file.destinationId,
     destinationId: file.sourceId,
   } as FileTransAcceptMessageType;
+};
+
+export const getFileTransferStatus = (fileId: string) => {
+  const fileTransfers = useFileTransfersStore.getState();
+  const destFileTransfer = fileTransfers.FileTransfers.filter((f) => f.id === fileId);
+
+  return destFileTransfer[0].transferStatus;
 };
