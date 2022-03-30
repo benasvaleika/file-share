@@ -84,7 +84,7 @@ class RTCTransferConnection {
           this.sendOffset += chunkSize;
           if (this.sendOffset >= this.file.size) {
             this.fileTransferStore.changeTransferStatus(this.file.id, TransferStatusEnum.COMPLETE);
-            this.disconnectPeers();
+            setTimeout(this.disconnectPeers.bind(this), 5000);
           }
           if (this.sendOffset < this.file.size) {
             readSlice(this.sendOffset);
@@ -115,6 +115,8 @@ class RTCTransferConnection {
     console.log('Message received');
     this.receiveBuffer.push(event.data);
     this.receivedSize += event.data.byteLength;
+
+    console.log(this.receivedSize, this.file.size);
 
     if (this.receivedSize === this.file.size) {
       console.log('Transfer complete');
@@ -151,6 +153,8 @@ class RTCTransferConnection {
   }
 
   disconnectPeers() {
+    console.log('disconnect peers');
+
     this.sendChannel.close();
     if (this.receiveChannel) {
       this.receiveChannel.close();

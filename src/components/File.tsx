@@ -1,6 +1,7 @@
 import React, { useEffect, useMemo, useState } from 'react';
 import { FaRegFileAlt } from 'react-icons/fa';
 import RTCTransferConnection from '../services/RTC/RTCservice';
+import useFileTransfersStore from '../stores/useFileTransfersStore';
 import { TransferStatusEnum } from '../types/mesageEnum';
 import { FileTransferType } from '../types/messageTypes';
 import { getFileTransferStatus } from '../utils/filesUtils';
@@ -23,14 +24,14 @@ export const File: React.FC<FileProps> = ({ file, outgoing, onFileCancel, onFile
     return new RTCTransferConnection(file);
   }, []);
 
-  const transferAcceptHandler = async () => {
-    RTCTransfer.createRTCConnection();
-  };
-
   const newTransferStatus = getFileTransferStatus(file.id);
   if (newTransferStatus !== transferStatus) {
     setTransferStatus(newTransferStatus);
   }
+
+  const transferAcceptHandler = () => {
+    RTCTransfer.createRTCConnection();
+  };
 
   // Triggered by transfer accept handler
   useEffect(() => {
@@ -65,13 +66,17 @@ export const File: React.FC<FileProps> = ({ file, outgoing, onFileCancel, onFile
     }
   };
 
+  const transferDoneHandler = () => {
+    useFileTransfersStore.getState().removeFileTransfer(file.id);
+  };
+
   return (
     <div className="text-secondary-two ml-2 flex justify-between mt-4">
       <div className="flex items-center">
         <FaRegFileAlt size={34} className="hover:text-base ease-in-out duration-200" />
         <div className="ml-2 font-rhd text-xl font-bold text-white">{file.name}</div>
       </div>
-      <div className="flex items-center mr-6">
+      <div className="flex items-center mr-6 ease-in">
         {outgoing ? (
           // Outgoing tranfers
           <>
@@ -79,11 +84,18 @@ export const File: React.FC<FileProps> = ({ file, outgoing, onFileCancel, onFile
               transferStatus === TransferStatusEnum.COMPLETE) && (
               <ProgressBar percentage={sendProgress} />
             )}
-            <Button
-              className="hover:bg-base"
-              name="Cancel"
-              onClick={() => onFileCancel(file.id, file.destinationId)}
-            />
+
+            {transferStatus !== TransferStatusEnum.COMPLETE ? (
+              // On Pending
+              <Button
+                className="hover:bg-base"
+                name="Cancel"
+                onClick={() => onFileCancel(file.id, file.destinationId)}
+              />
+            ) : (
+              // On Complete
+              <Button className="hover:bg-base" name="Done" onClick={() => transferDoneHandler()} />
+            )}
           </>
         ) : (
           // Incoming transfers
@@ -92,17 +104,25 @@ export const File: React.FC<FileProps> = ({ file, outgoing, onFileCancel, onFile
               transferStatus === TransferStatusEnum.COMPLETE) && (
               <ProgressBar percentage={receiveProgress} />
             )}
-            <Button
-              className="mr-2 hover:bg-base"
-              color="secondaryTwo"
-              name="Accept"
-              onClick={transferAcceptHandler}
-            />
-            <Button
-              className="hover:bg-base"
-              name="Decline"
-              onClick={() => onFileReject(file.id, file.sourceId)}
-            />
+            {transferStatus !== TransferStatusEnum.COMPLETE ? (
+              // On Pending
+              <>
+                <Button
+                  className="mr-2 hover:bg-base"
+                  color="secondaryTwo"
+                  name="Accept"
+                  onClick={transferAcceptHandler}
+                />
+                <Button
+                  className="hover:bg-base"
+                  name="Decline"
+                  onClick={() => onFileReject(file.id, file.sourceId)}
+                />
+              </>
+            ) : (
+              // On Complete
+              <Button className="hover:bg-base" name="Done" onClick={() => transferDoneHandler()} />
+            )}
           </>
         )}
       </div>
