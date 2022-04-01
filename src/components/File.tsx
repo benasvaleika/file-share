@@ -4,7 +4,7 @@ import RTCTransferConnection from '../services/RTC/RTCservice';
 import useFileTransfersStore from '../stores/useFileTransfersStore';
 import { TransferStatusEnum } from '../types/mesageEnum';
 import { FileTransferType } from '../types/messageTypes';
-import { getFileTransferStatus } from '../utils/filesUtils';
+import { createShorterFileName, getFileTransferStatus } from '../utils/filesUtils';
 import { Button } from './Button';
 import { ProgressBar } from './ProgressBar';
 
@@ -20,8 +20,14 @@ export const File: React.FC<FileProps> = ({ file, outgoing, onFileCancel, onFile
   const [receiveProgress, setReceiveProgress] = useState(0);
   const [transferStatus, setTransferStatus] = useState(TransferStatusEnum.PENDING);
 
+  // Create new RTCTransfer class
   const RTCTransfer = useMemo(() => {
     return new RTCTransferConnection(file);
+  }, []);
+
+  // Shorten file display name
+  const shorterFileName = useMemo(() => {
+    return createShorterFileName(file.name);
   }, []);
 
   const newTransferStatus = getFileTransferStatus(file.id);
@@ -74,7 +80,7 @@ export const File: React.FC<FileProps> = ({ file, outgoing, onFileCancel, onFile
     <div className="text-secondary-two ml-2 flex justify-between mt-4">
       <div className="flex items-center">
         <FaRegFileAlt size={34} className="hover:text-base ease-in-out duration-200" />
-        <div className="ml-2 font-rhd text-xl font-bold text-white">{file.name}</div>
+        <div className="ml-2 font-rhd text-xl font-bold text-white">{shorterFileName}</div>
       </div>
       <div className="flex items-center mr-6 ease-in">
         {outgoing ? (

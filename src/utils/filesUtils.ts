@@ -87,3 +87,9 @@ export const getFileTransferStatus = (fileId: string) => {
 
   return destFileTransfer[0].transferStatus;
 };
+
+export const createShorterFileName = (fileName: string) => {
+  const sliceStart = fileName.slice(0, 10);
+  const sliceEnd = fileName.slice(fileName.length - 10);
+  return sliceStart + '...' + sliceEnd;
+};

@@ -116,8 +116,6 @@ class RTCTransferConnection {
     this.receiveBuffer.push(event.data);
     this.receivedSize += event.data.byteLength;
 
-    console.log(this.receivedSize, this.file.size);
-
     if (this.receivedSize === this.file.size) {
       console.log('Transfer complete');
       const received = new Blob(this.receiveBuffer);
