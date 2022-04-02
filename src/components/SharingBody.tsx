@@ -33,20 +33,22 @@ export const SharingBody: React.FC<SharingBodyProps> = () => {
   return (
     <>
       {fileTransfers.length > 0 ? (
-        <div>
-          {fileTransfers.map((f) => {
-            return (
-              <File
-                key={f.id}
-                outgoing={f.outgoing}
-                file={f}
-                onFileCancel={(fileId, fileDestinationId) =>
-                  fileCancelHandler(fileId, fileDestinationId)
-                }
-                onFileReject={(fileId, fileSourceId) => fileRejectHandler(fileId, fileSourceId)}
-              />
-            );
-          })}
+        <div className="flex flex-col h-[calc(100%-7.5rem)] overflow-hidden">
+          <div className="flex-grow overflow-y-auto">
+            {fileTransfers.map((f) => {
+              return (
+                <File
+                  key={f.id}
+                  outgoing={f.outgoing}
+                  file={f}
+                  onFileCancel={(fileId, fileDestinationId) =>
+                    fileCancelHandler(fileId, fileDestinationId)
+                  }
+                  onFileReject={(fileId, fileSourceId) => fileRejectHandler(fileId, fileSourceId)}
+                />
+              );
+            })}
+          </div>
         </div>
       ) : (
         <div className=" w-[calc(100%-1rem)] ml-2 h-[calc(100%-7rem)] ">
