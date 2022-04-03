@@ -111,20 +111,31 @@ export const File: React.FC<FileProps> = ({ file, outgoing, onFileCancel, onFile
               <ProgressBar percentage={receiveProgress} />
             )}
             {transferStatus !== TransferStatusEnum.COMPLETE ? (
-              // On Pending
-              <>
-                <Button
-                  className="mr-2 hover:bg-base"
-                  color="secondaryTwo"
-                  name="Accept"
-                  onClick={transferAcceptHandler}
-                />
-                <Button
-                  className="hover:bg-base"
-                  name="Decline"
-                  onClick={() => onFileReject(file.id, file.sourceId)}
-                />
-              </>
+              transferStatus === TransferStatusEnum.IN_PROGRESS ? (
+                // On In Progress
+                <>
+                  <Button
+                    className="hover:bg-base"
+                    name="Cancel"
+                    onClick={() => onFileCancel(file.id, file.destinationId)}
+                  />
+                </>
+              ) : (
+                // On Pending
+                <>
+                  <Button
+                    className="mr-2 hover:bg-base"
+                    color="secondaryTwo"
+                    name="Accept"
+                    onClick={transferAcceptHandler}
+                  />
+                  <Button
+                    className="hover:bg-base"
+                    name="Decline"
+                    onClick={() => onFileReject(file.id, file.sourceId)}
+                  />
+                </>
+              )
             ) : (
               // On Complete
               <Button className="hover:bg-base" name="Done" onClick={() => transferDoneHandler()} />
