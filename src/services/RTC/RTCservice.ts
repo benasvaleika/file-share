@@ -80,8 +80,13 @@ class RTCTransferConnection {
       fileReader.addEventListener('load', (e: any) => {
         if (e.target?.result) {
           // console.log('FileRead.onload ', e);
-          this.sendChannel.send(e.target.result as ArrayBuffer);
-          this.sendOffset += chunkSize;
+
+          console.log(this.file.size, this.sendOffset);
+
+          if (this.sendChannel.bufferedAmount < 100000) {
+            this.sendChannel.send(e.target.result as ArrayBuffer);
+            this.sendOffset += chunkSize;
+          }
           if (this.sendOffset >= this.file.size) {
             this.fileTransferStore.changeTransferStatus(this.file.id, TransferStatusEnum.COMPLETE);
             setTimeout(this.disconnectPeers.bind(this), 5000);
